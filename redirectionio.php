@@ -24,8 +24,7 @@ class RedirectionIO
 {
     public function __construct()
     {
-        register_activation_hook(__FILE__, 'setUpPlugin');
-        register_uninstall_hook(__FILE__, 'uninstallPlugin');
+        register_activation_hook(__FILE__, [$this, 'setUpPlugin']);
         
         add_action('plugins_loaded', [$this, 'findRedirect']);
         add_action('admin_menu', [$this, 'setUpAdminPage']);
@@ -35,11 +34,6 @@ class RedirectionIO
     public function setUpPlugin()
     {
         add_option('redirectionio', ['host' => '', 'port' => '']);
-    }
-
-    public function uninstallPlugin()
-    {
-        delete_option('redirectionio');
     }
 
     public function setUpAdminPage()
