@@ -1,0 +1,48 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: redirection.io\n"
+"POT-Creation-Date: 2017-10-27 14:47+0200\n"
+"PO-Revision-Date: 2017-10-27 16:19+0200\n"
+"Last-Translator: \n"
+"Language-Team: coucou@redirection.io\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: redirectionio.php:55
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: redirectionio.php:71
+msgid "Settings"
+msgstr "Réglages"
+
+#: redirectionio.php:78
+msgid "Host"
+msgstr "Hôte"
+
+#: redirectionio.php:86
+msgid "Port"
+msgstr "Port"
+
+#: redirectionio.php:95
+msgid ""
+"Please set here the connection options of your redirection.io agent "
+"[required]."
+msgstr ""
+"Merci de configurer ici les options de connexion de votre agent "
+"redirection.io [requis]."
+
+#: wordpress/admin_template.php:4
+msgid ""
+"Proxy client for redirection.io | Put an end to 404 errors - Track HTTP "
+"errors and setup useful HTTP redirections"
+msgstr ""
+"Client de redirection.io | Mettez fin aux erreurs 404 - Trackez les "
+"erreurs HTTP et configurez des redirections HTTP utiles"

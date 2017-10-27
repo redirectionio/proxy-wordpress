@@ -7,6 +7,8 @@
  * Version: 0.1
  * Author: redirection.io
  * Author Website: https://redirection.io
+ * Text Domain: redirectionio
+ * Domain Path: /wordpress/languages
  */
 
 namespace RedirectionIO\Client\Wordpress;
@@ -27,8 +29,14 @@ class RedirectionIO
         register_activation_hook(__FILE__, [$this, 'setUpPlugin']);
         
         add_action('plugins_loaded', [$this, 'findRedirect']);
+        add_action('init', [$this, 'setTranslations']);
         add_action('admin_menu', [$this, 'setUpAdminPage']);
         add_action('admin_init', [$this, 'registerAdminSettings']);
+    }
+
+    public function setTranslations()
+    {
+        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/wordpress/languages');
     }
 
     public function setUpPlugin()
@@ -60,14 +68,14 @@ class RedirectionIO
 
         add_settings_section(
             'redirectionio-section',
-            'Settings',
+            __('Settings', 'redirectionio'),
             [$this, 'printSection'],
             'redirectionio'
         );
 
         add_settings_field(
             'host',
-            'Host',
+            __('Host', 'redirectionio'),
             [$this, 'printHostField'],
             'redirectionio',
             'redirectionio-section'
@@ -75,7 +83,7 @@ class RedirectionIO
 
         add_settings_field(
             'port',
-            'Port',
+            __('Port', 'redirectionio'),
             [$this, 'printPortField'],
             'redirectionio',
             'redirectionio-section'
@@ -84,7 +92,7 @@ class RedirectionIO
 
     public function printSection()
     {
-        echo '<p>Please set here the connection options of your redirection.io agent [required].</p>';
+        echo '<p>' . __('Please set here the connection options of your redirection.io agent [required].', 'redirectionio') . '</p>';
     }
 
     public function printHostField()
