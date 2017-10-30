@@ -1,0 +1,23 @@
+#connections .form-table {
+    width: auto;
+}
+
+#connections .form-table th {
+    width: auto;
+}
+
+#connections .form-table input {
+    width: 125px;
+}
+
+#connections .connections_remove {
+    color: red;
+    cursor: pointer;
+    font-size: 1.1em;
+    height: 1.1em;
+    width: 1.1em;
+}
+
+#connections #connections_add {
+    margin-top: 20px;
+}

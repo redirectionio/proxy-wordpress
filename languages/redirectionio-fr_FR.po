@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: redirection.io\n"
-"POT-Creation-Date: 2017-10-27 14:47+0200\n"
-"PO-Revision-Date: 2017-10-27 16:19+0200\n"
+"POT-Creation-Date: 2017-10-30 16:16+0100\n"
+"PO-Revision-Date: 2017-10-30 16:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: coucou@redirection.io\n"
 "Language: fr_FR\n"
@@ -19,30 +19,50 @@ msgstr ""
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: redirectionio.php:71
-msgid "Settings"
-msgstr "Réglages"
+#: redirectionio.php:75
+#, php-format
+msgid "Connection #%s"
+msgstr "Connexion #%s"
 
-#: redirectionio.php:78
+#: redirectionio.php:83
+msgid "Name"
+msgstr "Nom"
+
+#: redirectionio.php:86
 msgid "Host"
 msgstr "Hôte"
 
-#: redirectionio.php:86
+#: redirectionio.php:89
 msgid "Port"
 msgstr "Port"
 
-#: redirectionio.php:95
-msgid ""
-"Please set here the connection options of your redirection.io agent "
-"[required]."
-msgstr ""
-"Merci de configurer ici les options de connexion de votre agent "
-"redirection.io [requis]."
+#: wordpress/admin_template.php:93
+msgid "redirection.io settings"
+msgstr "Réglages de redirection.io"
 
-#: wordpress/admin_template.php:4
+#: wordpress/admin_template.php:95
 msgid ""
 "Proxy client for redirection.io | Put an end to 404 errors - Track HTTP "
 "errors and setup useful HTTP redirections"
 msgstr ""
-"Client de redirection.io | Mettez fin aux erreurs 404 - Trackez les "
-"erreurs HTTP et configurez des redirections HTTP utiles"
+"Client de redirection.io | Mettez fin aux erreurs 404 - Trackez les erreurs "
+"HTTP et configurez des redirections HTTP utiles."
+
+#: wordpress/admin_template.php:97
+msgid ""
+"Please set here the connection options of your redirection.io agent "
+"[required]."
+msgstr ""
+"Merci de configurer ici les options de connexion de votre agent redirection."
+"io [requis]."
+
+#: wordpress/admin_template.php:104
+msgid "Add"
+msgstr ""
+
+#: wordpress/admin_template.php:212
+msgid "Are you sure ?"
+msgstr "Êtes-vous sûr ?"
+
+#~ msgid "Settings"
+#~ msgstr "Réglages"

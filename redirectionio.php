@@ -32,6 +32,13 @@ class RedirectionIO
         add_action('init', [$this, 'setTranslations']);
         add_action('admin_menu', [$this, 'setUpAdminPage']);
         add_action('admin_init', [$this, 'registerAdminSettings']);
+        add_action('admin_enqueue_scripts', [$this, 'registerAssets']);
+    }
+
+    public function registerAssets()
+    {
+        wp_enqueue_style('redirectionio', plugins_url('wordpress/assets/css/redirectionio.css', __FILE__));
+        wp_enqueue_script('redirectionio', plugins_url('wordpress/assets/js/redirectionio.js', __FILE__), [], false, true);
     }
 
     public function setTranslations()
@@ -41,7 +48,7 @@ class RedirectionIO
 
     public function setUpPlugin()
     {
-        add_option('redirectionio', ['host' => '', 'port' => '']);
+        add_option('redirectionio', [['name' => '', 'host' => '', 'port' => '']]);
     }
 
     public function setUpAdminPage()
@@ -55,7 +62,7 @@ class RedirectionIO
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
         
-        require_once __DIR__ . '/wordpress/admin_template.php';
+        require_once __DIR__ . '/wordpress/templates/admin.php';
     }
 
     public function registerAdminSettings()
@@ -66,57 +73,67 @@ class RedirectionIO
             [$this, 'sanitizeInput']
         );
 
-        add_settings_section(
-            'redirectionio-section',
-            __('Settings', 'redirectionio'),
-            [$this, 'printSection'],
-            'redirectionio'
-        );
+        $options = get_option('redirectionio');
 
-        add_settings_field(
-            'host',
-            __('Host', 'redirectionio'),
-            [$this, 'printHostField'],
-            'redirectionio',
-            'redirectionio-section'
-        );
+        foreach ($options as $i => $option) {
+            add_settings_section(
+                'redirectionio-section-' . $i,
+                sprintf(__('Connection #%s', 'redirectionio'), $i+1),
+                [$this, 'printSection'],
+                'redirectionio'
+            );
 
-        add_settings_field(
-            'port',
-            __('Port', 'redirectionio'),
-            [$this, 'printPortField'],
-            'redirectionio',
-            'redirectionio-section'
-        );
+            foreach ($option as $key => $value) {
+                switch ($key) {
+                    case 'name':
+                        $title = __('Name', 'redirectionio');
+                        break;
+                    case 'host':
+                        $title = __('Host', 'redirectionio');
+                        break;
+                    case 'port':
+                        $title = __('Port', 'redirectionio');
+                        break;
+                    default:
+                        $title = 'unknown';
+                }
+
+                add_settings_field(
+                    $id . '_' . $key,
+                    $title,
+                    [$this, 'printField'],
+                    'redirectionio',
+                    'redirectionio-section-' . $i,
+                    [
+                        'id' => $i,
+                        'type' => $key,
+                        'value' => $value,
+                    ]
+                );
+            }
+        }
     }
 
     public function printSection()
     {
-        echo '<p>' . __('Please set here the connection options of your redirection.io agent [required].', 'redirectionio') . '</p>';
     }
 
-    public function printHostField()
+    public function printField($args)
     {
-        $options = get_option('redirectionio');
-        echo "<input id='redirectionio_host' name='redirectionio[host]' size='40' type='text' value='{$options['host']}' />";
-    }
-
-    public function printPortField()
-    {
-        $options = get_option('redirectionio');
-        echo "<input id='redirectionio_port' name='redirectionio[port]' size='40' type='text' value='{$options['port']}' />";
+        $id = array_key_exists('id', $args) ? $args['id']: '';
+        $type = array_key_exists('type', $args) ? $args['type']: '';
+        $value = array_key_exists('value', $args) ? $args['value']: '';
+        echo "<input id='redirectionio_{$id}_{$type}' name='redirectionio[$id][$type]' size='40' type='text' value='$value' />";
     }
 
     public function sanitizeInput($input)
     {
         $newInput = [];
 
-        if (isset($input['host'])) {
-            $newInput['host'] = sanitize_text_field($input['host']);
-        }
-
-        if (isset($input['port'])) {
-            $newInput['port'] = sanitize_text_field($input['port']);
+        foreach ($input as $i => $option) {
+            foreach ($option as $key => $value) {
+                $newInput[$i][$key] = sanitize_text_field($input[$i][$key]);
+            }
         }
 
         return $newInput;
@@ -126,13 +143,29 @@ class RedirectionIO
     {
         $options = get_option('redirectionio');
 
-        if ($options['host'] === '' || $options['port'] === '') {
+        // TODO: improve with multihost
+        
+        set_error_handler(__CLASS__ . '::handleInternalError');
+
+        $isUp = true;
+
+        try {
+            $connection = fsockopen($options[0]['host'], (int) $options[0]['port'], $errno, $errstr, 30);
+        } catch (\ErrorException $e) {
+            $isUp = false;
+        }
+
+        restore_error_handler();
+
+        if ($isUp) {
+            fclose($connection);
+        } else {
             return;
         }
 
         $connectionOptions = ['agent' => [
-            'host' => $options['host'],
-            'port' => $options['port']
+            'host' => $options[0]['host'],
+            'port' => $options[0]['port']
         ]];
         
         $client = new Client($connectionOptions);
@@ -149,8 +182,15 @@ class RedirectionIO
             return;
         }
 
+        // TODO: think about logger here
+
         wp_redirect($response->getLocation(), $response->getStatusCode());
         exit;
+    }
+
+    public static function handleInternalError($type, $message, $file, $line)
+    {
+        throw new \ErrorException($message, 0, $type, $file, $line);
     }
 }
 
