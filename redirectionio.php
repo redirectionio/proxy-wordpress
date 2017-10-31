@@ -20,7 +20,10 @@ if (!defined('ABSPATH')) {
 require_once __DIR__ . '/sdk/vendor/autoload.php';
 
 use RedirectionIO\Client\Client;
-use RedirectionIO\Client\HTTPMessage\ServerRequest;
+use RedirectionIO\Client\Exception\AgentNotFoundException;
+use RedirectionIO\Client\HttpMessage\RedirectResponse;
+use RedirectionIO\Client\HttpMessage\Request;
+use RedirectionIO\Client\HttpMessage\Response;
 
 class RedirectionIO
 {
@@ -48,7 +51,11 @@ class RedirectionIO
 
     public function setUpPlugin()
     {
-        add_option('redirectionio', [['name' => '', 'host' => '', 'port' => '']]);
+        add_option('redirectionio', [[
+            'name' => '',
+            'host' => '',
+            'port' => '',
+        ]]);
     }
 
     public function setUpAdminPage()
@@ -142,55 +149,42 @@ class RedirectionIO
     public function findRedirect()
     {
         $options = get_option('redirectionio');
+        $connectionOptions = [];
 
-        // TODO: improve with multihost
-        
-        set_error_handler(__CLASS__ . '::handleInternalError');
+        foreach ($options as $option) {
+            foreach ($option as $key => $val) {
+                if ($key === 'name') {
+                    continue;
+                }
 
-        $isUp = true;
-
-        try {
-            $connection = fsockopen($options[0]['host'], (int) $options[0]['port'], $errno, $errstr, 30);
-        } catch (\ErrorException $e) {
-            $isUp = false;
+                $connectionOptions[$option['name']][$key] = $val;
+            }
         }
 
-        restore_error_handler();
-
-        if ($isUp) {
-            fclose($connection);
-        } else {
-            return;
-        }
-
-        $connectionOptions = ['agent' => [
-            'host' => $options[0]['host'],
-            'port' => $options[0]['port']
-        ]];
-        
         $client = new Client($connectionOptions);
-        $request = new ServerRequest(
+        $request = new Request(
             $_SERVER['HTTP_HOST'],
             $_SERVER['REQUEST_URI'],
             $_SERVER['HTTP_USER_AGENT'],
             $_SERVER['HTTP_REFERER']
         );
         
-        $response = $client->findRedirect($request);
-
-        if (null === $response) {
+        try {
+            $response = $client->findRedirect($request);
+        } catch (AgentNotFoundException $e) {
             return;
         }
 
-        // TODO: think about logger here
+        if (null === $response) {
+            $response = new Response(http_response_code());
+            $client->log($request, $response);
 
+            return;
+        }
+
+        $client->log($request, $response);
         wp_redirect($response->getLocation(), $response->getStatusCode());
         exit;
-    }
-
-    public static function handleInternalError($type, $message, $file, $line)
-    {
-        throw new \ErrorException($message, 0, $type, $file, $line);
     }
 }
 
