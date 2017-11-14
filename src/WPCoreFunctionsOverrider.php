@@ -4,6 +4,7 @@ namespace RedirectionIO\Client\Wordpress;
 
 /**
  * WordPress Core Functions Overrider
+ * WordPress Version at the time of writing: 4.8.3
  *
  * This class is used to clone and modify core wordpress functions to fit our needs
  * without changing initial ones for complete isolation
