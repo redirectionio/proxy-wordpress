@@ -2,8 +2,6 @@
 
 namespace RedirectionIO\Client\Wordpress;
 
-use RedirectionIO\Client\Wordpress\WPCoreFunctionsOverrider;
-
 class RedirectionIOSettingsPage
 {
     private $overrider;
@@ -18,14 +16,14 @@ class RedirectionIOSettingsPage
         add_action('admin_enqueue_scripts', [$this, 'registerAssets']);
     }
 
-    public function setTranslations()
-    {
-        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    }
-
     public function setUp()
     {
         add_options_page('redirection.io', 'redirection.io', 'manage_options', 'redirectionio', [$this, 'outputContent']);
+    }
+
+    public function setTranslations()
+    {
+        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function outputContent()
@@ -33,13 +31,13 @@ class RedirectionIOSettingsPage
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
-        
+
         $title = __('redirection.io settings', 'redirectionio');
         $intro = __('Proxy client for redirection.io | Put an end to 404 errors - Track HTTP
             errors and setup useful HTTP redirections. Please set here the connection
             options of your redirection.io agent [required].', 'redirectionio');
         $confirm = __('Are you sure ?', 'redirectionio');
-        
+
         echo '
             <div class="wrap">
                 <h1>' . $title . '</h1>
@@ -51,7 +49,7 @@ class RedirectionIOSettingsPage
         $this->overrider->do_settings_sections('redirectionio');
 
         echo '<button id="connections_add" class="button" onclick="addConnection(event)">' . __('Add') . '</button>';
-        
+
         submit_button();
 
         echo '
@@ -75,7 +73,7 @@ class RedirectionIOSettingsPage
         foreach ($options as $i => $option) {
             add_settings_section(
                 'redirectionio-section-' . $i,
-                sprintf(__('Connection #%s', 'redirectionio'), $i+1),
+                sprintf(__('Connection #%s', 'redirectionio'), $i + 1),
                 [$this, 'printSection'],
                 'redirectionio'
             );
@@ -130,9 +128,9 @@ class RedirectionIOSettingsPage
 
     public function printField($args)
     {
-        $id = array_key_exists('id', $args) ? $args['id']: '';
-        $type = array_key_exists('type', $args) ? $args['type']: '';
-        $value = array_key_exists('value', $args) ? $args['value']: '';
+        $id = array_key_exists('id', $args) ? $args['id'] : '';
+        $type = array_key_exists('type', $args) ? $args['type'] : '';
+        $value = array_key_exists('value', $args) ? $args['value'] : '';
         echo "<input id='redirectionio_{$id}_{$type}' name='redirectionio[$id][$type]' size='40' type='text' value='$value' />";
     }
 

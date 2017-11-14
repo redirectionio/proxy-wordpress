@@ -4,7 +4,6 @@ namespace RedirectionIO\Client\Wordpress;
 
 use RedirectionIO\Client\Client;
 use RedirectionIO\Client\Exception\AgentNotFoundException;
-use RedirectionIO\Client\HttpMessage\RedirectResponse;
 use RedirectionIO\Client\HttpMessage\Request;
 use RedirectionIO\Client\HttpMessage\Response;
 
@@ -47,7 +46,7 @@ class RedirectionIO
             $_SERVER['HTTP_USER_AGENT'],
             $_SERVER['HTTP_REFERER']
         );
-        
+
         try {
             $response = $client->findRedirect($request);
         } catch (AgentNotFoundException $e) {
