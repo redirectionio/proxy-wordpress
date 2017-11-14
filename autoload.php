@@ -8,13 +8,10 @@
  * Author: redirection.io
  * Author Website: https://redirection.io
  * Text Domain: redirectionio
- * Domain Path: /wordpress/languages
+ * Domain Path: /wordpress/languages.
  */
 
 namespace RedirectionIO\Client\Wordpress;
-
-use RedirectionIO\Client\Wordpress\RedirectionIO;
-use RedirectionIO\Client\Wordpress\RedirectionIOSettingsPage;
 
 // Prevent public user to directly access .php files through url
 if (!defined('ABSPATH')) {

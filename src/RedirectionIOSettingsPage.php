@@ -23,7 +23,7 @@ class RedirectionIOSettingsPage
 
     public function setTranslations()
     {
-        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/../languages');
     }
 
     public function outputContent()
@@ -136,7 +136,7 @@ class RedirectionIOSettingsPage
 
     public function registerAssets()
     {
-        wp_enqueue_style('redirectionio', plugins_url('assets/css/redirectionio.css', __FILE__));
-        wp_enqueue_script('redirectionio', plugins_url('assets/js/redirectionio.js', __FILE__), [], false, true);
+        wp_enqueue_style('redirectionio', plugins_url('../assets/css/redirectionio.css', __FILE__));
+        wp_enqueue_script('redirectionio', plugins_url('../assets/js/redirectionio.js', __FILE__), [], false, true);
     }
 }
