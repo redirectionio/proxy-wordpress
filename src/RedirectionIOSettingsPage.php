@@ -184,13 +184,13 @@ class RedirectionIOSettingsPage
         $placeholder = array_key_exists('placeholder', $args) ? $args['placeholder'] : '';
         $description = array_key_exists('description', $args) ? $args['description'] : '';
 
-        echo "<input id='rio_{$id}_{$type}' name='rio[connections][$id][$type]' size='40' type='text' value='$value' placeholder='$placeholder' />";
-        echo "<p class='description' id='rio_{$id}_{$type}_description'>$description</p>";
+        echo "<input id='redirectionio_{$id}_{$type}' name='redirectionio[connections][$id][$type]' size='40' type='text' value='$value' placeholder='$placeholder' />";
+        echo "<p class='description' id='redirectionio_{$id}_{$type}_description'>$description</p>";
     }
 
     public function printCheckbox($checked)
     {
-        echo '<input id="rio_doNotRedirectAdmin" name="rio[doNotRedirectAdmin]" type="checkbox" ' . ($checked ? 'checked' : '') . ' />';
+        echo '<input id="redirectionio_doNotRedirectAdmin" name="redirectionio[doNotRedirectAdmin]" type="checkbox" ' . ($checked ? 'checked' : '') . ' />';
     }
 
     public function registerAssets()

@@ -46,14 +46,14 @@ class WPCoreFunctionsOverrider
             if (RedirectionIOSettingsPage::isWorkingConnection($connection)) {
                 echo '
                     <div class="rio_connection_status rio_connection_working">
-                        <span class="dashicons dashicons-yes"></span> working
-                    </div>
+                        <span class="dashicons dashicons-yes"></span>' . __('working', 'redirectionio') .
+                    '</div>
                 ';
             } else {
                 echo '
                     <div class="rio_connection_status rio_connection_not_working">
-                    <span class="dashicons dashicons-no-alt"></span> not working
-                    </div>
+                    <span class="dashicons dashicons-no-alt"></span>' . __('not working', 'redirectionio') .
+                    '</div>
                 ';
             }
 

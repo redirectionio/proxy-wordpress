@@ -10,9 +10,6 @@ class RedirectionIO
 {
     public function __construct()
     {
-        // TODO: This function need review (maybe broken on plugin reactivation)
-        // Idea: Renaming redirectionio.php to autoload.php has broken it ?
-        register_activation_hook(__FILE__, [$this, 'setUp']);
         add_action('plugins_loaded', [$this, 'findRedirect']);
     }
 
@@ -26,7 +23,7 @@ class RedirectionIO
                     'port' => '',
                 ],
             ],
-            'doNotRedirectAgent' => true,
+            'doNotRedirectAdmin' => true,
         ]);
     }
 

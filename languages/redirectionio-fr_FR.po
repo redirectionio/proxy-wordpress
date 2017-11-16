@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: redirection.io\n"
-"POT-Creation-Date: 2017-11-16 17:02+0100\n"
-"PO-Revision-Date: 2017-11-16 17:21+0100\n"
+"POT-Creation-Date: 2017-11-16 19:05+0100\n"
+"PO-Revision-Date: 2017-11-16 19:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: coucou@redirection.io\n"
 "Language: fr_FR\n"
@@ -50,8 +50,8 @@ msgid ""
 "followed the <a href=\"\">installation guide</a> to setup a redirection.io "
 "agent on your server"
 msgstr ""
-"suivi le <a href=\"\">guide d’installation</a> d’un agent redirection.io "
-"sur votre serveur"
+"suivi le <a href=\"\">guide d’installation</a> d’un agent redirection.io sur "
+"votre serveur"
 
 #: src/RedirectionIOSettingsPage.php:54
 msgid ""
@@ -66,8 +66,8 @@ msgid ""
 "Note: in most cases, you only have one agent, so you only need to configure "
 "one connection."
 msgstr ""
-"Remarque : dans la majorité des cas, vous avez seulement un agent, donc "
-"vous n’avez besoin de configurer qu’une seule connexion."
+"Remarque : dans la majorité des cas, vous avez seulement un agent, donc vous "
+"n’avez besoin de configurer qu’une seule connexion."
 
 #: src/RedirectionIOSettingsPage.php:59
 msgid "Are you sure ?"
@@ -118,6 +118,14 @@ msgstr "Désactiver les redirections pour l’interface d’administration"
 msgid "Yes, I wan't to disable it"
 msgstr "Oui, je veux les désactiver"
 
+#: src/WPCoreFunctionsOverrider.php:50
+msgid "working"
+msgstr "en marche"
+
+#: src/WPCoreFunctionsOverrider.php:56
+msgid "not working"
+msgstr "ne fonctionne pas"
+
 #: src/WPCoreFunctionsOverrider.php:75
 msgid "Add"
 msgstr ""
@@ -148,8 +156,8 @@ msgstr ""
 #: src/WPCoreFunctionsOverrider.php:130
 msgid "To prevent this, we recommend you to always leave this option enabled."
 msgstr ""
-"Afin de prévenir ce risque, nous vous recommandons de toujours laisser "
-"cette option activée."
+"Afin de prévenir ce risque, nous vous recommandons de toujours laisser cette "
+"option activée."
 
 #~ msgid "redirection.io settings"
 #~ msgstr "Réglages de redirection.io"

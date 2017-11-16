@@ -37,3 +37,5 @@ spl_autoload_register(function ($class) {
 // Instantiate plugin
 new RedirectionIO();
 new RedirectionIOSettingsPage();
+
+register_activation_hook(__FILE__, ['RedirectionIO\Client\Wordpress\RedirectionIO', 'setUp']);
