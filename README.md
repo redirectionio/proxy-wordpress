@@ -30,7 +30,7 @@ Drop us an email to `coucou@redirection.io` if you need help or have any questio
 
 1. Copy/paste `wordpress` directory in `wp-content/plugins/`
 2. Rename it `redirectionio`
-3. Add the [PHP SDK directory](../) into it
+3. Add the (PHP SDK directory)[../sdk/] into it
 4. Go to your WP admin area in `Plugins > Installed Plugins`
 5. Click `Activate` link in redirection.io row
 

@@ -18,10 +18,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Call SDK autoloader
+// Call redirection.io PHP SDK autoloader
 require_once __DIR__ . '/sdk/vendor/autoload.php';
 
-// Create WP plugin autoloader
+// Create redirection.io WP plugin autoloader
 spl_autoload_register(function ($class) {
     $namespace = 'RedirectionIO\Client\Wordpress';
 

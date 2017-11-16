@@ -1,9 +1,9 @@
-function addConnection(e)
+function rioAddConnection(e)
 {
     e.preventDefault();
 
     // get DOM elements
-    var form = document.getElementById('connections');
+    var form = document.getElementById('rio_connections');
     var tables = form.getElementsByTagName('table');
     var lastTable = tables[tables.length - 1];
     var inputs = lastTable.getElementsByTagName('input');
@@ -14,33 +14,33 @@ function addConnection(e)
     var titleId = parseInt(lastH2.innerHTML.split('#')[1]);
 
     // find next id
-    var id = parseInt(lastInput.name.split(/\[|\]/)[1]);
+    var id = parseInt(lastInput.name.split(/\[|\]/)[3]);
     var newId = id + 1; 
-    
+
     // clone a table of inputs (name, host and port)
     var clone = tables[0].cloneNode(true);
     var cloneInputs = clone.getElementsByTagName('input');
 
     // update id/name for each new input field
     [].forEach.call(cloneInputs, function(input) {
-        updateInput(input, newId);
+        rioUpdateInput(input, newId);
     });
 
-    var newH2 = createH2(h2Title, ++titleId);
+    var newH2 = rioCreateH2(h2Title, ++titleId);
 
     // insert h2 and new fields to DOM
-    var addButton = document.getElementById('connections_add');
+    var addButton = document.getElementById('rio_connections_add');
     form.insertBefore(newH2, addButton);
     form.insertBefore(clone, addButton);
 
     // add a remove button to first h2 element
     if (h2Arr[0].firstElementChild === null) {
-        var newFirstH2 = createH2(h2Title, 1);
+        var newFirstH2 = rioCreateH2(h2Title, 1);
         form.replaceChild(newFirstH2, h2Arr[0]);
     }
 }
 
-function removeConnection(e)
+function rioRemoveConnection(e)
 {
     e.preventDefault();
 
@@ -49,12 +49,13 @@ function removeConnection(e)
     }
 
     var title = e.target.parentElement;
-    var fields = title.nextSibling;
+    var status = rioNextWithClass(title, 'rio_connection_status');
+    var fields = rioNextWithClass(title, 'form-table');
     var titleId = parseInt(title.innerHTML.split('#')[1]);
-    var form = document.getElementById('connections');
+    var form = document.getElementById('rio_connections');
     var h2Arr = form.getElementsByTagName('h2');
     var h2Title = h2Arr[0].innerHTML.split('#')[0];
-    
+
     [].forEach.call(h2Arr, function(h2) {
         var id = parseInt(h2.innerHTML.split('#')[1]);
 
@@ -64,10 +65,10 @@ function removeConnection(e)
 
             [].forEach.call(inputs, function(input) {
                 var inputId = parseInt(input.id.split('_')[1]);
-                updateInput(input, --inputId, true);
+                rioUpdateInput(input, --inputId, true);
             });
 
-            var newH2 = createH2(h2Title, --id);
+            var newH2 = rioCreateH2(h2Title, --id);
             form.replaceChild(newH2, h2);
         }
     });
@@ -76,12 +77,16 @@ function removeConnection(e)
     fields.remove();
     title.remove();
 
+    if (status !== null) {
+        status.remove();
+    }
+
     if (1 === h2Arr.length) {
         h2Arr[0].removeChild(h2Arr[0].firstElementChild);
     }
 }
 
-function updateInput(input, id, keepValue)
+function rioUpdateInput(input, id, keepValue)
 {   
     keepValue = typeof keepValue !== 'undefined' ? keepValue : false;
 
@@ -104,6 +109,10 @@ function updateInput(input, id, keepValue)
         if (0 === i) {
             newName += inputNameSplit[i];
         } else if (1 === i) {
+            newName += '[connections]';
+        } else if (2 === i) {
+            continue;
+        } else if (3 === i) {
             newName += '[' + id;
         } else if (0 === i%2) {
             newName += ']' + inputNameSplit[i];
@@ -120,16 +129,31 @@ function updateInput(input, id, keepValue)
     }
 }
 
-function createH2(title, id)
+function rioCreateH2(title, id)
 {
     var h2 = document.createElement('h2');
     var removeButton = document.createElement('span');
-    removeButton.className = 'dashicons dashicons-trash connections_remove';
+    removeButton.className = 'dashicons dashicons-trash rio_connections_remove';
     removeButton.onclick = function(e) {
-        removeConnection(e);
+        rioRemoveConnection(e);
     };
     h2.innerHTML = title + '#' + id + ' ';
     h2.appendChild(removeButton);
     
     return h2;
+}
+
+function rioHasClass(el, className) {
+    var str = " " + el.className + " ";
+    var testClassName = " " + className + " ";
+    return(str.indexOf(testClassName) != -1) ;
+}
+
+function rioNextWithClass(node, className) {
+    while (node = node.nextSibling) {
+        if (rioHasClass(node, className)) {
+            return node;
+        }
+    }
+    return null;
 }

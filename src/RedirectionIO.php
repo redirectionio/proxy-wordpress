@@ -3,7 +3,6 @@
 namespace RedirectionIO\Client\Wordpress;
 
 use RedirectionIO\Client\Client;
-use RedirectionIO\Client\Exception\AgentNotFoundException;
 use RedirectionIO\Client\HttpMessage\Request;
 use RedirectionIO\Client\HttpMessage\Response;
 
@@ -11,35 +10,42 @@ class RedirectionIO
 {
     public function __construct()
     {
+        // TODO: This function need review (maybe broken on plugin reactivation)
+        // Idea: Renaming redirectionio.php to autoload.php has broken it ?
         register_activation_hook(__FILE__, [$this, 'setUp']);
         add_action('plugins_loaded', [$this, 'findRedirect']);
     }
 
     public function setUp()
     {
-        add_option('redirectionio', [[
-            'name' => '',
-            'host' => '',
-            'port' => '',
-        ]]);
+        add_option('redirectionio', [
+            'connections' => [
+                [
+                    'name' => '',
+                    'host' => '',
+                    'port' => '',
+                ],
+            ],
+            'doNotRedirectAgent' => true,
+        ]);
     }
 
     public function findRedirect()
     {
         $options = get_option('redirectionio');
-        $connectionOptions = [];
+        $connections = [];
 
-        foreach ($options as $option) {
+        foreach ($options['connections'] as $option) {
             foreach ($option as $key => $val) {
                 if ($key === 'name') {
                     continue;
                 }
 
-                $connectionOptions[$option['name']][$key] = $val;
+                $connections[$option['name']][$key] = $val;
             }
         }
 
-        $client = new Client($connectionOptions);
+        $client = new Client($connections);
         $request = new Request(
             $_SERVER['HTTP_HOST'],
             $_SERVER['REQUEST_URI'],
@@ -47,11 +53,11 @@ class RedirectionIO
             $_SERVER['HTTP_REFERER']
         );
 
-        try {
-            $response = $client->findRedirect($request);
-        } catch (AgentNotFoundException $e) {
+        if ($this->isAdminPage($request) && $options['doNotRedirectAdmin']) {
             return;
         }
+
+        $response = $client->findRedirect($request);
 
         if (null === $response) {
             $response = new Response(http_response_code());
@@ -63,5 +69,17 @@ class RedirectionIO
         $client->log($request, $response);
         wp_redirect($response->getLocation(), $response->getStatusCode());
         exit;
+    }
+
+    private function isAdminPage($request)
+    {
+        $adminRoot = str_replace(get_site_url(), '', get_admin_url());
+        $requestPath = substr($request->getPath(), 0, strlen($adminRoot));
+
+        if ($adminRoot === $requestPath) {
+            return true;
+        }
+
+        return false;
     }
 }

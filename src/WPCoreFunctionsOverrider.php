@@ -16,7 +16,7 @@ class WPCoreFunctionsOverrider
      *
      * @param mixed $page
      */
-    public function do_settings_sections($page)
+    public function doSettingsSections($page)
     {
         global $wp_settings_sections, $wp_settings_fields;
 
@@ -25,15 +25,36 @@ class WPCoreFunctionsOverrider
         }
 
         $sections = (array) $wp_settings_sections[$page];
-        $nb = count($sections);
 
+        $doNotRedirectAdminSection = $sections['redirectionio-section-do-not-redirect-admin'];
+        unset($sections['redirectionio-section-do-not-redirect-admin']);
+
+        echo '<div id="rio_connections">';
+
+        $nb = count($sections);
         foreach ($sections as $section) {
             if ($section['title']) {
                 if (1 === $nb) {
                     echo '<h2>' . $section['title'] . '</h2>';
                 } else {
-                    echo '<h2>' . $section['title'] . ' <span class="dashicons dashicons-trash connections_remove" onclick="removeConnection(event)"></span></h2>';
+                    echo '<h2>' . $section['title'] . ' <span class="dashicons dashicons-trash rio_connections_remove" onclick="rioRemoveConnection(event)"></span></h2>';
                 }
+            }
+
+            $connection = RedirectionIOSettingsPage::getConnectionFromSection($page, $section['id']);
+
+            if (RedirectionIOSettingsPage::isWorkingConnection($connection)) {
+                echo '
+                    <div class="rio_connection_status rio_connection_working">
+                        <span class="dashicons dashicons-yes"></span> working
+                    </div>
+                ';
+            } else {
+                echo '
+                    <div class="rio_connection_status rio_connection_not_working">
+                    <span class="dashicons dashicons-no-alt"></span> not working
+                    </div>
+                ';
             }
 
             if ($section['callback']) {
@@ -44,9 +65,18 @@ class WPCoreFunctionsOverrider
                 continue;
             }
             echo '<table class="form-table">';
-            $this->do_settings_fields($page, $section['id']);
+            $this->doSettingsFields($page, $section['id']);
             echo '</table>';
         }
+
+        echo '
+            <button id="rio_connections_add" class="button" onclick="rioAddConnection(event)">' .
+            __('Add') .
+            '</button>
+            </div>
+        ';
+
+        $this->outputDoNotRedirectAdminSection($page, $doNotRedirectAdminSection);
     }
 
     /**
@@ -55,7 +85,7 @@ class WPCoreFunctionsOverrider
      * @param mixed $page
      * @param mixed $section
      */
-    public function do_settings_fields($page, $section)
+    private function doSettingsFields($page, $section)
     {
         global $wp_settings_fields;
 
@@ -63,14 +93,14 @@ class WPCoreFunctionsOverrider
             return;
         }
 
-        echo "<tr{$class}>";
-
         foreach ((array) $wp_settings_fields[$page][$section] as $field) {
             $class = '';
 
             if (!empty($field['args']['class'])) {
                 $class = ' class="' . esc_attr($field['args']['class']) . '"';
             }
+
+            echo "<tr{$class}>";
 
             if (!empty($field['args']['label_for'])) {
                 echo '<th scope="row"><label for="' . esc_attr($field['args']['label_for']) . '">' . $field['title'] . '</label></th>';
@@ -81,8 +111,25 @@ class WPCoreFunctionsOverrider
             echo '<td>';
             call_user_func($field['callback'], $field['args']);
             echo '</td>';
+            echo '</tr>';
+        }
+    }
+
+    private function outputDoNotRedirectAdminSection($page, $section)
+    {
+        if ($section['title']) {
+            echo '<h2>' . $section['title'] . '</h2>';
         }
 
-        echo '</tr>';
+        echo '<p>' . __('This option let you ignore eventual redirection rules set on admin area pages.', 'redirectionio') . '</p>';
+        echo '<p>' . sprintf(__("
+            %sExample :%s if by mistake you add a redirection rule from %s/wp-login.php%s to %s/foo%s,
+            you'll not be able to connect to your admin area anymore.
+        ", 'redirectionio'), '<b>', '</b>', '<code>', '</code>', '<code>', '</code>') . '</p>';
+        echo '<p>' . __('To prevent this, we recommend you to always leave this option enabled.', 'redirectionio') . '</p>';
+
+        echo '<table class="form-table">';
+        $this->doSettingsFields($page, $section['id']);
+        echo '</table>';
     }
 }
