@@ -6,6 +6,12 @@ use RedirectionIO\Client\Client;
 use RedirectionIO\Client\Exception\AgentNotFoundException;
 use RedirectionIO\Client\HttpMessage\Request;
 
+/**
+ *  RedirectionIOSettingsPage class.
+ *
+ * This class is used to create a new page in the admin area
+ * dedicated to redirection.io. It lets you configuring the plugin as you like.
+ */
 class RedirectionIOSettingsPage
 {
     private $overrider;
@@ -157,7 +163,10 @@ class RedirectionIOSettingsPage
         );
     }
 
-    public function sanitizeInput($input)
+    /**
+     * @param array $input
+     */
+    public function sanitizeInput(array $input)
     {
         $newInput = [];
 
@@ -176,7 +185,10 @@ class RedirectionIOSettingsPage
     {
     }
 
-    public function printField($args)
+    /**
+     * @param array $args
+     */
+    public function printField(array $args)
     {
         $id = array_key_exists('id', $args) ? $args['id'] : '';
         $type = array_key_exists('type', $args) ? $args['type'] : '';
@@ -188,6 +200,9 @@ class RedirectionIOSettingsPage
         echo "<p class='description' id='redirectionio_{$id}_{$type}_description'>$description</p>";
     }
 
+    /**
+     * @param bool $checked
+     */
     public function printCheckbox($checked)
     {
         echo '<input id="redirectionio_doNotRedirectAdmin" name="redirectionio[doNotRedirectAdmin]" type="checkbox" ' . ($checked ? 'checked' : '') . ' />';
@@ -199,6 +214,12 @@ class RedirectionIOSettingsPage
         wp_enqueue_script('redirectionio', plugins_url('../assets/js/redirectionio.js', __FILE__), [], false, true);
     }
 
+    /**
+     * Return a connection (associative array with `host` and `port` keys).
+     *
+     * @param mixed $page
+     * @param mixed $section
+     */
     public static function getConnectionFromSection($page, $section)
     {
         global $wp_settings_fields;
@@ -226,6 +247,14 @@ class RedirectionIOSettingsPage
         return $connection;
     }
 
+    /**
+     * Test if a connection is currently working.
+     *
+     * $connection param should be an associative array
+     * with `host` and `port` keys
+     *
+     * @param mixed $connection array|bool(false)
+     */
     public static function isWorkingConnection($connection)
     {
         if ($connection === false) {

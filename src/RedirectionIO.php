@@ -6,6 +6,11 @@ use RedirectionIO\Client\Client;
 use RedirectionIO\Client\HttpMessage\Request;
 use RedirectionIO\Client\HttpMessage\Response;
 
+/**
+ * Main plugin file.
+ *
+ * This class is the core logic of the plugin.
+ */
 class RedirectionIO
 {
     public function __construct()
@@ -68,7 +73,12 @@ class RedirectionIO
         exit;
     }
 
-    private function isAdminPage($request)
+    /**
+     * Check if the requested page belongs to admin area.
+     *
+     * @param Request $request
+     */
+    private function isAdminPage(Request $request)
     {
         $adminRoot = str_replace(get_site_url(), '', get_admin_url());
         $requestPath = substr($request->getPath(), 0, strlen($adminRoot));

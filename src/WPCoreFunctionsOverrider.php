@@ -26,6 +26,7 @@ class WPCoreFunctionsOverrider
 
         $sections = (array) $wp_settings_sections[$page];
 
+        // remove doNotRedirectAdmin section from sections array to use it later
         $doNotRedirectAdminSection = $sections['redirectionio-section-do-not-redirect-admin'];
         unset($sections['redirectionio-section-do-not-redirect-admin']);
 
@@ -115,6 +116,10 @@ class WPCoreFunctionsOverrider
         }
     }
 
+    /**
+     * @param mixed $page
+     * @param mixed $section
+     */
     private function outputDoNotRedirectAdminSection($page, $section)
     {
         if ($section['title']) {

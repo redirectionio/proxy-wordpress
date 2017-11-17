@@ -1,3 +1,8 @@
+/*
+ * Add a new connection dynamically.
+ * 
+ * @param {event} e
+ */
 function rioAddConnection(e)
 {
     e.preventDefault();
@@ -40,6 +45,11 @@ function rioAddConnection(e)
     }
 }
 
+/*
+ * Remove a connection dynamically.
+ * 
+ * @param {event} e
+ */
 function rioRemoveConnection(e)
 {
     e.preventDefault();
@@ -60,8 +70,7 @@ function rioRemoveConnection(e)
         var id = parseInt(h2.innerHTML.split('#')[1]);
 
         if (id > titleId) {
-
-            var inputs = h2.nextSibling.getElementsByTagName('input');
+            var inputs = rioNextWithClass(h2, 'form-table').getElementsByTagName('input');
 
             [].forEach.call(inputs, function(input) {
                 var inputId = parseInt(input.id.split('_')[1]);
@@ -86,6 +95,18 @@ function rioRemoveConnection(e)
     }
 }
 
+/*
+ * Update input `name` and `id` properties with a new `id`.
+ * 
+ * Example : 
+ * with id = 5 / keepValue = false
+ * from <input id="rio_12_type" name="rio[connections][12][type]" value="example" ... />
+ * to <input id="rio_5_type" name="rio[connections][5][type]" value="" ... />
+ * 
+ * @param {object} input An HTML input
+ * @param {int} id New input id
+ * @param {bool} keepValue If false, we wipe the input value
+ */
 function rioUpdateInput(input, id, keepValue)
 {   
     keepValue = typeof keepValue !== 'undefined' ? keepValue : false;
@@ -129,6 +150,13 @@ function rioUpdateInput(input, id, keepValue)
     }
 }
 
+/*
+ * Create an HTML h2 element containing "title #id".
+ * 
+ * @param {string} title H2 title value 
+ * @param {int} id
+ * @return {object} H2 element created
+ */
 function rioCreateH2(title, id)
 {
     var h2 = document.createElement('h2');
@@ -143,12 +171,26 @@ function rioCreateH2(title, id)
     return h2;
 }
 
+/*
+ * Check if an HTML element `el` has class `className`.
+ * 
+ * @param {object} el HTML element
+ * @param {string} className Class name to check
+ * @return {bool}
+ */
 function rioHasClass(el, className) {
     var str = " " + el.className + " ";
     var testClassName = " " + className + " ";
     return(str.indexOf(testClassName) != -1) ;
 }
 
+/*
+ * Find nextSibling element of node `node` with className `className`.
+ * 
+ * @param {object} node A DOM node
+ * @param {string} className Class name to find
+ * @return {mixed} node element if found else null
+ */
 function rioNextWithClass(node, className) {
     while (node = node.nextSibling) {
         if (rioHasClass(node, className)) {
