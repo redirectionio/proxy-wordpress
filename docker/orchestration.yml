@@ -1,0 +1,40 @@
+version: '3'
+
+volumes:
+    database: {}
+    website: {}
+
+services:
+    server:
+        build: './nginx'
+        volumes:
+            - website:/var/www/html
+        links:
+            - website
+        restart: always
+        ports:
+            - "8000:80"
+
+    database:
+        image: mysql:5.7
+        volumes:
+            - database:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rio
+            MYSQL_DATABASE: rio
+            MYSQL_USER: rio
+            MYSQL_PASSWORD: rio
+
+    website:
+        build: './wordpress'
+        volumes:
+            - website:/var/www/html
+        depends_on:
+            - database
+        restart: always
+        environment:
+            WORDPRESS_DB_HOST: database:3306
+            WORDPRESS_DB_NAME: rio
+            WORDPRESS_DB_USER: rio
+            WORDPRESS_DB_PASSWORD: rio
