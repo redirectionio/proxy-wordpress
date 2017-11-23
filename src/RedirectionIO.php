@@ -37,6 +37,10 @@ class RedirectionIO
         $options = get_option('redirectionio');
         $connections = [];
 
+        if (false === $options || !array_key_exists('connections', $options)) {
+            return;
+        }
+
         foreach ($options['connections'] as $option) {
             foreach ($option as $key => $val) {
                 if ($key === 'name') {
