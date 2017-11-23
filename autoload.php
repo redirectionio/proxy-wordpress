@@ -18,21 +18,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Call redirection.io PHP SDK autoloader
+// Call autoloaders
 require_once __DIR__ . '/sdk/vendor/autoload.php';
-
-// Create redirection.io WP plugin autoloader
-spl_autoload_register(function ($class) {
-    $namespace = 'RedirectionIO\Client\Wordpress';
-
-    if (false === strpos($class, $namespace)) {
-        return;
-    }
-
-    $directory = realpath(plugin_dir_path(__FILE__)) . '/src/';
-    $file = str_replace($namespace . '\\', '', $class) . '.php';
-    require_once $directory . $file;
-});
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Instantiate plugin
 new RedirectionIO();

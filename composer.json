@@ -1,0 +1,27 @@
+{
+    "name": "redirectionio/wordpress-plugin",
+    "description": "redirection.io WordPress Plugin",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Grégoire Pineau",
+            "email": "lyrixx@lyrixx.info"
+        },
+        {
+            "name": "Quentin Brunet"
+        },
+        {
+            "name": "redirection.io",
+            "email": "coucou@redirection.io"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RedirectionIO\\Client\\Wordpress\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
