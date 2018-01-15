@@ -52,5 +52,5 @@ You can quickly try this plugin in a dockerized WordPress:
 
 1. Go to `docker` directory
 2. Run `./start.sh` script
-3. Open `http://redirection-io.dev:8000` for the homepage
-4. Open `http://redirection-io.dev:8000/wp-admin/options-general.php?page=redirectionio` for the dedicated plugin admin page
+3. Open `http://redirection-io.test:8000` for the homepage
+4. Open `http://redirection-io.test:8000/wp-admin/options-general.php?page=redirectionio` for the dedicated plugin admin page
