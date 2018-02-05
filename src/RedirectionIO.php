@@ -2,9 +2,9 @@
 
 namespace RedirectionIO\Client\Wordpress;
 
-use RedirectionIO\Client\Client;
-use RedirectionIO\Client\HttpMessage\Request;
-use RedirectionIO\Client\HttpMessage\Response;
+use RedirectionIO\Client\Sdk\Client;
+use RedirectionIO\Client\Sdk\HttpMessage\Request;
+use RedirectionIO\Client\Sdk\HttpMessage\Response;
 
 /**
  * Main plugin file.
@@ -38,7 +38,7 @@ class RedirectionIO
         $connections = [];
 
         if (false === $options || !array_key_exists('connections', $options)) {
-            return;
+            return false;
         }
 
         foreach ($options['connections'] as $option) {
@@ -60,7 +60,7 @@ class RedirectionIO
         );
 
         if ($this->isAdminPage($request) && $options['doNotRedirectAdmin']) {
-            return;
+            return false;
         }
 
         $response = $client->findRedirect($request);
@@ -69,11 +69,16 @@ class RedirectionIO
             $response = new Response(http_response_code());
             $client->log($request, $response);
 
-            return;
+            return false;
         }
 
         $client->log($request, $response);
         wp_redirect($response->getLocation(), $response->getStatusCode());
+        $this->exitCode();
+    }
+
+    public function exitCode()
+    {
         exit;
     }
 
