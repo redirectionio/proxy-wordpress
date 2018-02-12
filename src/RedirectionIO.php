@@ -24,8 +24,7 @@ class RedirectionIO
             'connections' => [
                 [
                     'name' => '',
-                    'host' => '',
-                    'port' => '',
+                    'remote_socket' => '',
                 ],
             ],
             'doNotRedirectAdmin' => true,

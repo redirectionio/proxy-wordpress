@@ -18,8 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-// Call autoloaders
-require_once __DIR__ . '/sdk/vendor/autoload.php';
+// Call autoloader
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Instantiate plugin

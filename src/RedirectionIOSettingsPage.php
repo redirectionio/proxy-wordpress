@@ -109,17 +109,11 @@ class RedirectionIOSettingsPage
                         $description = __('[Optional] If you have multiple connections, you may find useful to name them for better readibility.', 'redirectionio');
                         $placeholder = __('my-connection', 'redirectionio');
                         break;
-                    case 'host':
-                        $title = __('Host', 'redirectionio');
+                    case 'remote_socket':
+                        $title = __('Agent address', 'redirectionio');
                         $required = true;
-                        $description = __('[Required] Insert here your agent IP/hostname.', 'redirectionio');
-                        $placeholder = '192.168.1.1';
-                        break;
-                    case 'port':
-                        $title = __('Port', 'redirectionio');
-                        $required = true;
-                        $description = __('[Required] Insert here your agent port.', 'redirectionio');
-                        $placeholder = '20301';
+                        $description = __('[Required] Insert here your agent address. Internet Domain socket (AF_INET) and Unix Domain socket (AF_UNIX) are supported.<br/> Examples: 192.168.1.1:20301, agent.my-website.com:10301, /var/run/my-agent.sock', 'redirectionio');
+                        $placeholder = '192.168.1.1:20301';
                         break;
                     default:
                         $title = 'unknown';
@@ -215,7 +209,7 @@ class RedirectionIOSettingsPage
     }
 
     /**
-     * Return a connection (associative array with `host` and `port` keys).
+     * Return a connection (associative array with (`port` && `host`) || `remote_socket` keys).
      *
      * @param mixed $page
      * @param mixed $section
@@ -228,30 +222,30 @@ class RedirectionIOSettingsPage
             return false;
         }
 
-        $connection = [];
-
         foreach ((array) $wp_settings_fields[$page][$section] as $field) {
-            if ($field['args']['type'] === 'host') {
-                $connection['host'] = $field['args']['value'];
-            }
-
-            if ($field['args']['type'] === 'port') {
-                $connection['port'] = $field['args']['value'];
+            if ($field['args']['type'] === 'remote_socket') {
+                $remoteSocket = $field['args']['value'];
             }
         }
 
-        if (empty($connection['host']) || empty($connection['port'])) {
+        $remoteSocketParts = explode(':', $remoteSocket);
+
+        if (!isset($remoteSocketParts[0]) || isset($remoteSocketParts[2])) {
             return false;
         }
 
-        return $connection;
+        if (!isset($remoteSocketParts[1])) {
+            return ['remote_socket' => $remoteSocketParts[0]];
+        }
+
+        return ['host' => $remoteSocketParts[0], 'port' => $remoteSocketParts[1]];
     }
 
     /**
      * Test if a connection is currently working.
      *
      * $connection param should be an associative array
-     * with `host` and `port` keys
+     * with (`port` && `host`) || `remote_socket` keys
      *
      * @param mixed $connection array|bool(false)
      */
@@ -265,6 +259,7 @@ class RedirectionIOSettingsPage
             ['checkStatus' => [
                 'host' => $connection['host'],
                 'port' => $connection['port'],
+                'remote_socket' => $connection['remote_socket'],
             ]],
             10000,
             true

@@ -28,11 +28,10 @@ Drop us an email to `coucou@redirection.io` if you need help or have any questio
 
 *The old school way*
 
-1. Copy/paste `wordpress` directory in `wp-content/plugins/`
-2. Rename it `redirectionio`
-3. Add the [PHP SDK directory](../sdk/) into it
-4. Go to your WP admin area in `Plugins > Installed Plugins`
-5. Click `Activate` link in redirection.io row
+1. Run `COMPOSER_MIRROR_PATH_REPOS=1 composer install`
+2. Copy/paste `wordpress` directory in `wp-content/plugins/` and rename it `redirectionio`
+3. Go to your WP admin area in `Plugins > Installed Plugins`
+4. Click `Activate` link in redirection.io row
 
 ## Configuration
 

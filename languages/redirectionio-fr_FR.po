@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: redirection.io\n"
-"POT-Creation-Date: 2017-11-16 19:05+0100\n"
-"PO-Revision-Date: 2017-11-16 19:07+0100\n"
+"POT-Creation-Date: 2018-02-09 23:01+0100\n"
+"PO-Revision-Date: 2018-02-09 23:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: coucou@redirection.io\n"
 "Language: fr_FR\n"
@@ -15,18 +15,18 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: src/RedirectionIOSettingsPage.php:36
+#: src/RedirectionIOSettingsPage.php:42
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: src/RedirectionIOSettingsPage.php:42
+#: src/RedirectionIOSettingsPage.php:48
 msgid ""
 "redirection.io let you track HTTP errors and setup useful HTTP redirections."
 msgstr ""
 "redirection.io vous permet de trackez les erreurs HTTP et de configurer des "
 "redirections HTTP utiles."
 
-#: src/RedirectionIOSettingsPage.php:44
+#: src/RedirectionIOSettingsPage.php:50
 #, php-format
 msgid ""
 "This plugin works in combination with <a href=\"%s\">redirection.io</a> \n"
@@ -41,11 +41,11 @@ msgstr ""
 "</br>\n"
 "Avant de l’utiliser, merci de vérifier que vous avez :"
 
-#: src/RedirectionIOSettingsPage.php:50
+#: src/RedirectionIOSettingsPage.php:55
 msgid "created a redirection.io account <a href=\"\">here</a>"
 msgstr "créé un compte redirection.io <a href=\"\">ici</a>"
 
-#: src/RedirectionIOSettingsPage.php:51
+#: src/RedirectionIOSettingsPage.php:56
 msgid ""
 "followed the <a href=\"\">installation guide</a> to setup a redirection.io "
 "agent on your server"
@@ -53,7 +53,7 @@ msgstr ""
 "suivi le <a href=\"\">guide d’installation</a> d’un agent redirection.io sur "
 "votre serveur"
 
-#: src/RedirectionIOSettingsPage.php:54
+#: src/RedirectionIOSettingsPage.php:59
 msgid ""
 "Drop us an email to coucou@redirection.io if you need help or have any "
 "question."
@@ -61,7 +61,7 @@ msgstr ""
 "Contactez-nous par email à coucou@redirection.io si vous avez besoin d’aide "
 "ou la moindre question."
 
-#: src/RedirectionIOSettingsPage.php:56
+#: src/RedirectionIOSettingsPage.php:61
 msgid ""
 "Note: in most cases, you only have one agent, so you only need to configure "
 "one connection."
@@ -69,20 +69,20 @@ msgstr ""
 "Remarque : dans la majorité des cas, vous avez seulement un agent, donc vous "
 "n’avez besoin de configurer qu’une seule connexion."
 
-#: src/RedirectionIOSettingsPage.php:59
+#: src/RedirectionIOSettingsPage.php:64
 msgid "Are you sure ?"
 msgstr "Êtes-vous sûr ?"
 
-#: src/RedirectionIOSettingsPage.php:94
+#: src/RedirectionIOSettingsPage.php:99
 #, php-format
 msgid "Connection #%s"
 msgstr "Connexion #%s"
 
-#: src/RedirectionIOSettingsPage.php:102
+#: src/RedirectionIOSettingsPage.php:107
 msgid "Name"
 msgstr "Nom"
 
-#: src/RedirectionIOSettingsPage.php:104
+#: src/RedirectionIOSettingsPage.php:109
 msgid ""
 "[Optional] If you have multiple connections, you may find useful to name "
 "them for better readibility."
@@ -90,31 +90,29 @@ msgstr ""
 "[Optionnel] Si vous utilisez plusieurs connexions, n’hésitez pas à les "
 "nommer pour les distinguer plus facilement."
 
-#: src/RedirectionIOSettingsPage.php:105
+#: src/RedirectionIOSettingsPage.php:110
 msgid "my-connection"
 msgstr "ma-connexion"
 
-#: src/RedirectionIOSettingsPage.php:108
-msgid "Host"
-msgstr "Hôte"
+#: src/RedirectionIOSettingsPage.php:113
+msgid "Agent address"
+msgstr "Adresse de l’agent"
 
-#: src/RedirectionIOSettingsPage.php:110
-msgid "[Required] Insert here your agent IP/hostname."
-msgstr "[Requis] Entrez ici l’IP / le nom d’hôte de votre agent."
+#: src/RedirectionIOSettingsPage.php:115
+msgid ""
+"[Required] Insert here your agent address. Internet Domain socket (AF_INET) "
+"and Unix Domain socket (AF_UNIX) are supported.<br/> Examples: "
+"192.168.1.1:20301, agent.my-website.com:10301, /var/run/my-agent.sock"
+msgstr ""
+"[Requis] Entrez ici l’adresse de votre agent. Les sockets Internet (AF_INET) "
+"et Unix (AF_UNIX) sont supportés.<br/> Exemples : 192.168.1.1:20301, agent."
+"mon-site.com:10301, /var/run/mon-agent.sock"
 
-#: src/RedirectionIOSettingsPage.php:114
-msgid "Port"
-msgstr "Port"
-
-#: src/RedirectionIOSettingsPage.php:116
-msgid "[Required] Insert here your agent port."
-msgstr "[Requis] Entrez ici le port de votre agent."
-
-#: src/RedirectionIOSettingsPage.php:146
+#: src/RedirectionIOSettingsPage.php:145
 msgid "Disable redirections for admin area"
 msgstr "Désactiver les redirections pour l’interface d’administration"
 
-#: src/RedirectionIOSettingsPage.php:153
+#: src/RedirectionIOSettingsPage.php:152
 msgid "Yes, I wan't to disable it"
 msgstr "Oui, je veux les désactiver"
 
@@ -130,7 +128,7 @@ msgstr "ne fonctionne pas"
 msgid "Add"
 msgstr ""
 
-#: src/WPCoreFunctionsOverrider.php:125
+#: src/WPCoreFunctionsOverrider.php:129
 msgid ""
 "This option let you ignore eventual redirection rules set on admin area "
 "pages."
@@ -138,7 +136,7 @@ msgstr ""
 "Cette option vous permet d’ignorer d’éventuelles règles de redirection "
 "définies sur les pages de l’espace d’administration."
 
-#: src/WPCoreFunctionsOverrider.php:126
+#: src/WPCoreFunctionsOverrider.php:130
 #, php-format
 msgid ""
 "\n"
@@ -153,32 +151,8 @@ msgstr ""
 "vous ne pourrez plus vous connecter à l’administration.\n"
 "  "
 
-#: src/WPCoreFunctionsOverrider.php:130
+#: src/WPCoreFunctionsOverrider.php:134
 msgid "To prevent this, we recommend you to always leave this option enabled."
 msgstr ""
 "Afin de prévenir ce risque, nous vous recommandons de toujours laisser cette "
 "option activée."
-
-#~ msgid "redirection.io settings"
-#~ msgstr "Réglages de redirection.io"
-
-#~ msgid ""
-#~ "Proxy client for redirection.io | Put an end to 404 errors - Track HTTP\n"
-#~ "            errors and setup useful HTTP redirections. Please set here "
-#~ "the connection\n"
-#~ "            options of your redirection.io agent [required]."
-#~ msgstr ""
-#~ "Client de redirection.io | Mettez fin aux erreurs 404 - Trackez les "
-#~ "erreurs HTTP et configurez des redirections HTTP utiles. Merci de "
-#~ "configurer ici les options de connexion de votre agent redirection.io "
-#~ "[requis]."
-
-#~ msgid ""
-#~ "Please set here the connection options of your redirection.io agent "
-#~ "[required]."
-#~ msgstr ""
-#~ "Merci de configurer ici les options de connexion de votre agent "
-#~ "redirection.io [requis]."
-
-#~ msgid "Settings"
-#~ msgstr "Réglages"
