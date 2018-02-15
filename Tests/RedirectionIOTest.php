@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Mock some needed functions.
+ */
+
 namespace RedirectionIO\Client\Wordpress;
 
 use RedirectionIO\Client\Wordpress\Tests\RedirectionIOTest;
@@ -82,18 +86,18 @@ class RedirectionIOTest extends TestCase
 
     public function testWhenRedirectRuleExists()
     {
-        $this->initializeServerVars(['path' => 'foo']);
+        $this->initializeServerVars(['path' => '/foo']);
 
         $this->rio->findRedirect();
 
         $this->assertTrue(self::$isRedirect);
-        $this->assertSame('http://host1.com/bar', self::$redirect['location']);
+        $this->assertSame('/bar', self::$redirect['location']);
         $this->assertSame(301, self::$redirect['statusCode']);
     }
 
     public function testWhenRedirectRuleNotExists()
     {
-        $this->initializeServerVars(['path' => 'hello']);
+        $this->initializeServerVars(['path' => '/hello']);
 
         $this->rio->findRedirect();
 
@@ -113,7 +117,7 @@ class RedirectionIOTest extends TestCase
             'doNotRedirectAdmin' => false,
         ];
 
-        $this->initializeServerVars(['path' => 'foo']);
+        $this->initializeServerVars(['path' => '/foo']);
 
         $this->assertSame(false, $this->rio->findRedirect());
     }
@@ -153,10 +157,10 @@ class RedirectionIOTest extends TestCase
 
     private function initializeServerVars($options = [])
     {
-        $_SERVER['HTTP_HOST'] = array_key_exists('host', $options) ? $options['host'] : 'host1.com';
-        $_SERVER['REQUEST_URI'] = array_key_exists('path', $options) ? $options['path'] : '';
-        $_SERVER['HTTP_USER_AGENT'] = array_key_exists('user_agent', $options) ? $options['user_agent'] : 'redirection-io-client/0.0.1';
-        $_SERVER['HTTP_REFERER'] = array_key_exists('referer', $options) ? $options['referer'] : 'http://host0.com';
+        $_SERVER['HTTP_HOST'] = isset($options['host']) ? $options['host'] : 'host1.com';
+        $_SERVER['REQUEST_URI'] = isset($options['path']) ? $options['path'] : '';
+        $_SERVER['HTTP_USER_AGENT'] = isset($options['user_agent']) ? $options['user_agent'] : 'redirection-io-client/0.0.1';
+        $_SERVER['HTTP_REFERER'] = isset($options['referer']) ? $options['referer'] : 'http://host0.com';
     }
 
     private static function waitUntilProcReady(Process $proc)

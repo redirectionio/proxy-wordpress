@@ -184,11 +184,11 @@ class RedirectionIOSettingsPage
      */
     public function printField(array $args)
     {
-        $id = array_key_exists('id', $args) ? $args['id'] : '';
-        $type = array_key_exists('type', $args) ? $args['type'] : '';
-        $value = array_key_exists('value', $args) ? $args['value'] : '';
-        $placeholder = array_key_exists('placeholder', $args) ? $args['placeholder'] : '';
-        $description = array_key_exists('description', $args) ? $args['description'] : '';
+        $id = isset($args['id']) ? $args['id'] : '';
+        $type = isset($args['type']) ? $args['type'] : '';
+        $value = isset($args['value']) ? $args['value'] : '';
+        $placeholder = isset($args['placeholder']) ? $args['placeholder'] : '';
+        $description = isset($args['description']) ? $args['description'] : '';
 
         echo "<input id='redirectionio_{$id}_{$type}' name='redirectionio[connections][$id][$type]' size='40' type='text' value='$value' placeholder='$placeholder' />";
         echo "<p class='description' id='redirectionio_{$id}_{$type}_description'>$description</p>";
@@ -228,17 +228,7 @@ class RedirectionIOSettingsPage
             }
         }
 
-        $remoteSocketParts = explode(':', $remoteSocket);
-
-        if (!isset($remoteSocketParts[0]) || isset($remoteSocketParts[2])) {
-            return false;
-        }
-
-        if (!isset($remoteSocketParts[1])) {
-            return ['remote_socket' => $remoteSocketParts[0]];
-        }
-
-        return ['host' => $remoteSocketParts[0], 'port' => $remoteSocketParts[1]];
+        return ['remote_socket' => $remoteSocket];
     }
 
     /**

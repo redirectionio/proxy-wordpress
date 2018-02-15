@@ -36,7 +36,7 @@ class RedirectionIO
         $options = get_option('redirectionio');
         $connections = [];
 
-        if (false === $options || !array_key_exists('connections', $options)) {
+        if (false === $options || !isset($options['connections'])) {
             return false;
         }
 
