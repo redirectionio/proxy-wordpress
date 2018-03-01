@@ -4,7 +4,7 @@ msgstr ""
 "POT-Creation-Date: 2018-02-09 23:01+0100\n"
 "PO-Revision-Date: 2018-02-09 23:01+0100\n"
 "Last-Translator: \n"
-"Language-Team: coucou@redirection.io\n"
+"Language-Team: support@redirection.io\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,10 +55,10 @@ msgstr ""
 
 #: src/RedirectionIOSettingsPage.php:59
 msgid ""
-"Drop us an email to coucou@redirection.io if you need help or have any "
+"Drop us an email to support@redirection.io if you need help or have any "
 "question."
 msgstr ""
-"Contactez-nous par email à coucou@redirection.io si vous avez besoin d’aide "
+"Contactez-nous par email à support@redirection.io si vous avez besoin d’aide "
 "ou la moindre question."
 
 #: src/RedirectionIOSettingsPage.php:61

@@ -1,6 +1,6 @@
 {
     "name": "redirectionio/wordpress-plugin",
-    "description": "redirection.io WordPress Plugin",
+    "description": "RedirectionIO Proxy for WordPress",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
@@ -14,7 +14,7 @@
         },
         {
             "name": "redirection.io",
-            "email": "coucou@redirection.io"
+            "email": "support@redirection.io"
         }
     ],
     "require": {
@@ -43,8 +43,6 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": [
-            "vendor/bin/simple-phpunit"
-        ]
+        "test": "vendor/bin/simple-phpunit"
     }
 }

@@ -115,30 +115,37 @@ function rioUpdateInput(input, id, keepValue)
     var inputIdSplit = input.id.split('_');
     var newName = '';
     var newIdName = '';
+    var i;
 
-    for (var i = 0; i < inputIdSplit.length; ++i) {
-        if (0 === i) {
-            newIdName += inputIdSplit[i];
-        } else if (1 === i) {
-            newIdName += '_' + id;
-        } else {
-            newIdName += '_' + inputIdSplit[i];
+    for (i = 0; i < inputIdSplit.length; ++i) {
+        switch (i) {
+            case 0:
+                newIdName += inputIdSplit[i];
+                break;
+            case 1:
+                newIdName += '_' + id;
+                break;
+            default:
+                newIdName += '_' + inputIdSplit[i];
         }
     }
 
-    for (var i = 0; i < inputNameSplit.length; ++i) {
-        if (0 === i) {
-            newName += inputNameSplit[i];
-        } else if (1 === i) {
-            newName += '[connections]';
-        } else if (2 === i) {
-            continue;
-        } else if (3 === i) {
-            newName += '[' + id;
-        } else if (0 === i%2) {
-            newName += ']' + inputNameSplit[i];
-        } else {
-            newName += '[' + inputNameSplit[i];
+    for (i = 0; i < inputNameSplit.length; ++i) {
+        switch (i) {
+            case 0:
+                newName += inputNameSplit[i];
+                break;
+            case 1:
+                newName += '[connections]';
+                break;
+            case 2:
+                // do nothing
+                break;
+            case 3:
+                newName += '[' + id;
+                break;
+            default:
+                newName += ((0 === i%2) ? ']' : '[') + inputNameSplit[i];
         }
     }
 

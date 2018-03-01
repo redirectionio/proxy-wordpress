@@ -56,7 +56,7 @@ class RedirectionIOSettingsPage
                     '<li>' . sprintf(__('followed the <a href="">installation guide</a> to setup a redirection.io agent on your server', 'redirectionio'), esc_url('//redirection.io')) . '</li>' .
                 '</ul>' .
             '</p><p>' .
-                __('Drop us an email to coucou@redirection.io if you need help or have any question.', 'redirectionio') .
+                __('Drop us an email to support@redirection.io if you need help or have any question.', 'redirectionio') .
             '</p><p>' .
                 __('Note: in most cases, you only have one agent, so you only need to configure one connection.', 'redirectionio') .
             '</p>'
