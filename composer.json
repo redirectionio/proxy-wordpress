@@ -1,5 +1,5 @@
 {
-    "name": "redirectionio/wordpress-plugin",
+    "name": "redirectionio/proxy-wordpress",
     "description": "RedirectionIO Proxy for WordPress",
     "type": "wordpress-plugin",
     "license": "MIT",
@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "redirectionio/sdk": "dev-master"
+        "redirectionio/proxy-sdk": "dev-master"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.4@beta",
@@ -30,10 +30,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "path",
-            "url": "sdk"
-        },
         {
             "type": "path",
             "url": "../sdk"

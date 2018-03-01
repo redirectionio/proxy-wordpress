@@ -133,7 +133,7 @@ class RedirectionIOTest extends TestCase
         $parentFolder = substr(__DIR__, -15, -6);
         $fakeAgent = ('wordpress' === $parentFolder) ?
             __DIR__ . '/../../sdk/src/Resources/fake_agent.php' :
-            './sdk/src/Resources/fake_agent.php';
+            './vendor/redirectionio/proxy-sdk/src/Resources/fake_agent.php';
 
         $agent = new Process([$binary, $fakeAgent]);
         $agent
