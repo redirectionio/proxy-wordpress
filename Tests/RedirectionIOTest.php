@@ -77,7 +77,12 @@ class RedirectionIOTest extends TestCase
     {
         // clear
         self::$redirect = [];
-        $_SERVER = [];
+        unset(
+            $_SERVER['HTTP_HOST'],
+            $_SERVER['REQUEST_URI'],
+            $_SERVER['HTTP_USER_AGENT'],
+            $_SERVER['HTTP_REFERER']
+        );
 
         $this->rio = $this->getMockBuilder(RedirectionIO::class)
             ->setMethods(['exitCode'])
@@ -101,7 +106,7 @@ class RedirectionIOTest extends TestCase
 
         $this->rio->findRedirect();
 
-        $this->assertSame(false, self::$isRedirect);
+        $this->assertFalse(self::$isRedirect);
     }
 
     public function testWhenAgentDown()
@@ -119,7 +124,7 @@ class RedirectionIOTest extends TestCase
 
         $this->initializeServerVars(['path' => '/foo']);
 
-        $this->assertSame(false, $this->rio->findRedirect());
+        $this->assertFalse($this->rio->findRedirect());
     }
 
     private static function startAgent($port = 3100)
@@ -130,8 +135,8 @@ class RedirectionIOTest extends TestCase
         }
 
         // find fake_agent location
-        $parentFolder = substr(__DIR__, -15, -6);
-        $fakeAgent = ('wordpress' === $parentFolder) ?
+        $parentFolder = substr(__DIR__, -16, -5);
+        $fakeAgent = ('/wordpress/' === $parentFolder) ?
             __DIR__ . '/../../sdk/src/Resources/fake_agent.php' :
             './vendor/redirectionio/proxy-sdk/src/Resources/fake_agent.php';
 

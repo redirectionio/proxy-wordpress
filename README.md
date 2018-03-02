@@ -1,5 +1,6 @@
 # RedirectionIO Proxy for WordPress
 
+[![Latest Version](https://img.shields.io/github/release/redirectionio/proxy-wordpress.svg)](https://github.com/redirectionio/proxy-wordpress)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://img.shields.io/travis/redirectionio/proxy-wordpress/master.svg)](https://travis-ci.org/redirectionio/proxy-wordpress)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/redirectionio/proxy-wordpress.svg)](https://scrutinizer-ci.com/g/redirectionio/proxy-wordpress)
