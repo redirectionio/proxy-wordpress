@@ -257,7 +257,7 @@ class RedirectionIOSettingsPage
 
         try {
             $request = new Request('', '', '');
-            $response = $client->findRedirect($request);
+            $client->findRedirect($request);
         } catch (AgentNotFoundException $e) {
             return false;
         }
