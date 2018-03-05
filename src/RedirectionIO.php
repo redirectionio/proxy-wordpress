@@ -53,7 +53,7 @@ class RedirectionIO
         $client = new Client($connections);
         $scheme = 'http';
 
-        if ($_SERVER['HTTP_X_FORWARDED_PROTO']) {
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
             $scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
         } elseif (!empty($_SERVER['HTTPS'])) {
             $scheme = 'https';
