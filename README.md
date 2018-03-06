@@ -1,4 +1,4 @@
-# RedirectionIO Proxy for WordPress
+# redirection.io Proxy for WordPress
 
 [![Latest Version](https://img.shields.io/github/release/redirectionio/proxy-wordpress.svg)](https://github.com/redirectionio/proxy-wordpress)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
@@ -8,16 +8,13 @@
 
 [![Email](https://img.shields.io/badge/email-support@redirection.io-blue.svg)](mailto:support@redirection.io)
 
-redirection.io WordPress Proxy works in combination with [redirection.io](redirection.io).
+The redirection.io Proxy for WordPress works in combination with [redirection.io](redirection.io).
 
 If you don't know what is redirection.io, take the time to make a quick tour on the website.
 
 Before using it, you need:
-- a redirection.io account
-- a configured redirection.io agent on your server
-
-You don't have an account ? Please contact us [here](https://redirection.io/contact-us).
-You don't have an installed and configured agent ? Follow the [installation guide](https://redirection.io/documentation/developer-documentation/getting-started-installing-the-agent).
+- a redirection.io account. If you don't have an account, please [contact us here](https://redirection.io/contact-us).
+- a configured redirection.io agent on your server. Please follow the [installation guide](https://redirection.io/documentation/developer-documentation/installation-of-the-agent).
 
 Drop us an email to `support@redirection.io` if you need help or have any question.
 
