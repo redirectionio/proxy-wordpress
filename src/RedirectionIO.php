@@ -51,11 +51,20 @@ class RedirectionIO
         }
 
         $client = new Client($connections);
+        $scheme = 'http';
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            $scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+        } elseif (!empty($_SERVER['HTTPS'])) {
+            $scheme = 'https';
+        }
+
         $request = new Request(
             $_SERVER['HTTP_HOST'],
             $_SERVER['REQUEST_URI'],
             $_SERVER['HTTP_USER_AGENT'],
-            $_SERVER['HTTP_REFERER']
+            $_SERVER['HTTP_REFERER'],
+            $scheme
         );
 
         if ($this->isAdminPage($request) && $options['doNotRedirectAdmin']) {
