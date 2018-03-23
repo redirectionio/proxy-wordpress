@@ -47,7 +47,7 @@ class RedirectionIOSettingsPage
             '<p>' .
                 __('redirection.io let you track HTTP errors and setup useful HTTP redirections.', 'redirectionio') .
             '</p><p>' .
-               sprintf(__('This plugin works in combination with <a href="%s">redirection.io</a> 
+               sprintf(__('This plugin works in combination with <a href="%s">redirection.io</a>
                     and need an installed and configured agent on your server.
                     </br>
                     Before using it, please make sure that you have :', 'redirectionio'), esc_url('//redirection.io')) .

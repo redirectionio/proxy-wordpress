@@ -82,7 +82,7 @@ class RedirectionIO
 
         $client->log($request, $response);
 
-        if ($response->getStatusCode() == 410) {
+        if ($response->getStatusCode() === 410) {
             define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
             status_header(410);
         } else {

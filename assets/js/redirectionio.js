@@ -1,6 +1,6 @@
 /*
  * Add a new connection dynamically.
- * 
+ *
  * @param {event} e
  */
 function rioAddConnection(e)
@@ -20,7 +20,7 @@ function rioAddConnection(e)
 
     // find next id
     var id = parseInt(lastInput.name.split(/\[|\]/)[3]);
-    var newId = id + 1; 
+    var newId = id + 1;
 
     // clone a table of inputs (name, host and port)
     var clone = tables[0].cloneNode(true);
@@ -47,7 +47,7 @@ function rioAddConnection(e)
 
 /*
  * Remove a connection dynamically.
- * 
+ *
  * @param {event} e
  */
 function rioRemoveConnection(e)
@@ -97,18 +97,18 @@ function rioRemoveConnection(e)
 
 /*
  * Update input `name` and `id` properties with a new `id`.
- * 
- * Example : 
+ *
+ * Example :
  * with id = 5 / keepValue = false
  * from <input id="rio_12_type" name="rio[connections][12][type]" value="example" ... />
  * to <input id="rio_5_type" name="rio[connections][5][type]" value="" ... />
- * 
+ *
  * @param {object} input An HTML input
  * @param {int} id New input id
  * @param {bool} keepValue If false, we wipe the input value
  */
 function rioUpdateInput(input, id, keepValue)
-{   
+{
     keepValue = typeof keepValue !== 'undefined' ? keepValue : false;
 
     var inputNameSplit = input.name.split(/\[|\]/);
@@ -159,8 +159,8 @@ function rioUpdateInput(input, id, keepValue)
 
 /*
  * Create an HTML h2 element containing "title #id".
- * 
- * @param {string} title H2 title value 
+ *
+ * @param {string} title H2 title value
  * @param {int} id
  * @return {object} H2 element created
  */
@@ -174,13 +174,13 @@ function rioCreateH2(title, id)
     };
     h2.innerHTML = title + '#' + id + ' ';
     h2.appendChild(removeButton);
-    
+
     return h2;
 }
 
 /*
  * Check if an HTML element `el` has class `className`.
- * 
+ *
  * @param {object} el HTML element
  * @param {string} className Class name to check
  * @return {bool}
@@ -193,7 +193,7 @@ function rioHasClass(el, className) {
 
 /*
  * Find nextSibling element of node `node` with className `className`.
- * 
+ *
  * @param {object} node A DOM node
  * @param {string} className Class name to find
  * @return {mixed} node element if found else null
