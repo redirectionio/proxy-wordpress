@@ -33,8 +33,16 @@ function http_response_code()
 function wp_redirect($location, $statusCode)
 {
     RedirectionIOTest::$isRedirect = true;
-    RedirectionIOTest::$redirect = [
+    RedirectionIOTest::$response = [
         'location' => $location,
+        'statusCode' => $statusCode,
+    ];
+}
+
+function status_header($statusCode)
+{
+    RedirectionIOTest::$isGone = true;
+    RedirectionIOTest::$response = [
         'statusCode' => $statusCode,
     ];
 }
@@ -63,8 +71,9 @@ class RedirectionIOTest extends TestCase
         'doNotRedirectAdmin' => false,
     ];
 
-    public static $redirect = [];
+    public static $response = [];
     public static $isRedirect = null;
+    public static $isGone = null;
 
     private $rio;
 
@@ -76,7 +85,7 @@ class RedirectionIOTest extends TestCase
     public function setUp()
     {
         // clear
-        self::$redirect = [];
+        self::$response = [];
         unset(
             $_SERVER['HTTP_HOST'],
             $_SERVER['REQUEST_URI'],
@@ -96,8 +105,18 @@ class RedirectionIOTest extends TestCase
         $this->rio->findRedirect();
 
         $this->assertTrue(self::$isRedirect);
-        $this->assertSame('/bar', self::$redirect['location']);
-        $this->assertSame(301, self::$redirect['statusCode']);
+        $this->assertSame('/bar', self::$response['location']);
+        $this->assertSame(301, self::$response['statusCode']);
+    }
+
+    public function testWhen410RuleExists()
+    {
+        $this->initializeServerVars(['path' => '/garply']);
+
+        $this->rio->findRedirect();
+
+        $this->assertTrue(self::$isGone);
+        $this->assertSame(410, self::$response['statusCode']);
     }
 
     public function testWhenRedirectRuleNotExists()
