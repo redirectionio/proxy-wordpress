@@ -40,14 +40,8 @@ class RedirectionIO
             return false;
         }
 
-        foreach ($options['connections'] as $option) {
-            foreach ($option as $key => $val) {
-                if ($key === 'name') {
-                    continue;
-                }
-
-                $connections[$option['name']][$key] = $val;
-            }
+        foreach ($options['connections'] as $connection) {
+            $connections[$connection['name']] = $connection['remote_socket'];
         }
 
         $client = new Client($connections);

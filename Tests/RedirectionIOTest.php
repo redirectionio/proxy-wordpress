@@ -64,8 +64,7 @@ class RedirectionIOTest extends TestCase
         'connections' => [
             [
                 'name' => 'agent',
-                'host' => 'localhost',
-                'port' => 3100,
+                'remote_socket' => 'tcp://localhost:3100',
             ],
         ],
         'doNotRedirectAdmin' => false,
@@ -134,8 +133,7 @@ class RedirectionIOTest extends TestCase
             'connections' => [
                 [
                     'name' => 'agent',
-                    'host' => 'unknown-host',
-                    'port' => 80,
+                    'remote_socket' => 'tcp://unknown-host:80',
                 ],
             ],
             'doNotRedirectAdmin' => false,

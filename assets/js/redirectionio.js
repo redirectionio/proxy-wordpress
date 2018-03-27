@@ -22,7 +22,7 @@ function rioAddConnection(e)
     var id = parseInt(lastInput.name.split(/\[|\]/)[3]);
     var newId = id + 1;
 
-    // clone a table of inputs (name, host and port)
+    // clone a table of inputs (name, remote_address)
     var clone = tables[0].cloneNode(true);
     var cloneInputs = clone.getElementsByTagName('input');
 

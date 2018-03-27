@@ -112,8 +112,8 @@ class RedirectionIOSettingsPage
                     case 'remote_socket':
                         $title = __('Agent address', 'redirectionio');
                         $required = true;
-                        $description = __('[Required] Insert here your agent address. Internet Domain socket (AF_INET) and Unix Domain socket (AF_UNIX) are supported.<br/> Examples: 192.168.1.1:20301, agent.my-website.com:10301, /var/run/my-agent.sock', 'redirectionio');
-                        $placeholder = '192.168.1.1:20301';
+                        $description = __('[Required] Insert here your agent address. Internet Domain socket (AF_INET) and Unix Domain socket (AF_UNIX) are supported.<br/> Examples: tcp://192.168.1.1:20301, tcp://agent.my-website.com:10301, unix:///var/run/my-agent.sock', 'redirectionio');
+                        $placeholder = 'tcp://192.168.1.1:20301';
                         break;
                     default:
                         $title = 'unknown';
@@ -247,8 +247,6 @@ class RedirectionIOSettingsPage
 
         $client = new Client(
             ['checkStatus' => [
-                'host' => $connection['host'],
-                'port' => $connection['port'],
                 'remote_socket' => $connection['remote_socket'],
             ]],
             10000,
