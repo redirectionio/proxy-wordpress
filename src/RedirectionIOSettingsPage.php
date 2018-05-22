@@ -245,7 +245,8 @@ class RedirectionIOSettingsPage
             return false;
         }
 
-        $client = new Client([
+        $client = new Client(
+            [
                 'checkStatus' => $connection['remote_socket'],
             ],
             10000,
