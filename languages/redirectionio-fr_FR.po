@@ -85,7 +85,7 @@ msgstr "Nom"
 #: src/RedirectionIOSettingsPage.php:109
 msgid ""
 "[Optional] If you have multiple connections, you may find useful to name "
-"them for better readibility."
+"them for better readability."
 msgstr ""
 "[Optionnel] Si vous utilisez plusieurs connexions, n’hésitez pas à les "
 "nommer pour les distinguer plus facilement."

@@ -106,7 +106,7 @@ class RedirectionIOSettingsPage
                     case 'name':
                         $title = __('Name', 'redirectionio');
                         $required = false;
-                        $description = __('[Optional] If you have multiple connections, you may find useful to name them for better readibility.', 'redirectionio');
+                        $description = __('[Optional] If you have multiple connections, you may find useful to name them for better readability.', 'redirectionio');
                         $placeholder = __('my-connection', 'redirectionio');
                         break;
                     case 'remote_socket':
