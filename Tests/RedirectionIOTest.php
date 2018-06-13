@@ -122,9 +122,7 @@ class RedirectionIOTest extends TestCase
     {
         $this->initializeServerVars(['path' => '/hello']);
 
-        $this->rio->findRedirect();
-
-        $this->assertFalse(self::$isRedirect);
+        $this->assertFalse($this->rio->findRedirect());
     }
 
     public function testWhenAgentDown()

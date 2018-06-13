@@ -13,9 +13,12 @@ use RedirectionIO\Client\Sdk\HttpMessage\Response;
  */
 class RedirectionIO
 {
+    private $client;
+
     public function __construct()
     {
         add_action('plugins_loaded', [$this, 'findRedirect']);
+        add_action('template_redirect', [$this, 'log']);
     }
 
     public function setUp()
@@ -44,7 +47,7 @@ class RedirectionIO
             $connections[$connection['name']] = $connection['remote_socket'];
         }
 
-        $client = new Client($connections);
+        $this->client = new Client($connections);
         $scheme = 'http';
 
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
@@ -65,16 +68,13 @@ class RedirectionIO
             return false;
         }
 
-        $response = $client->findRedirect($request);
+        $response = $this->client->findRedirect($request);
 
         if (null === $response) {
-            $response = new Response(http_response_code());
-            $client->log($request, $response);
-
             return false;
         }
 
-        $client->log($request, $response);
+        $this->client->log($request, $response);
 
         if ($response->getStatusCode() === 410) {
             define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
@@ -84,6 +84,20 @@ class RedirectionIO
         }
 
         $this->exitCode();
+    }
+
+    public function log()
+    {
+        $request = new Request(
+            $_SERVER['HTTP_HOST'],
+            $_SERVER['REQUEST_URI'],
+            $_SERVER['HTTP_USER_AGENT'],
+            $_SERVER['HTTP_REFERER'],
+            $scheme
+        );
+        $response = new Response(http_response_code());
+
+        $this->client->log($request, $response);
     }
 
     public function exitCode()
