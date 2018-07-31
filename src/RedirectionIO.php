@@ -15,6 +15,8 @@ class RedirectionIO
 {
     private $client;
 
+    private $lastRuleId = null;
+
     public function __construct()
     {
         add_action('plugins_loaded', [$this, 'findRedirect']);
@@ -74,7 +76,7 @@ class RedirectionIO
             return false;
         }
 
-        $this->client->log($request, $response);
+        $this->lastRuleId = $response->getRuleId();
 
         if ($response->getStatusCode() === 410) {
             define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
@@ -88,6 +90,25 @@ class RedirectionIO
 
     public function log()
     {
+        $scheme = 'http';
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+            $scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+        } elseif (!empty($_SERVER['HTTPS'])) {
+            $scheme = 'https';
+        }
+
+        $location = null;
+        $headers = headers_list();
+
+        foreach ($headers as $header) {
+            $locationPos = stripos($header, 'Location: ');
+
+            if ($locationPos !== false) {
+                $location = substr($header, $locationPos);
+            }
+        }
+
         $request = new Request(
             $_SERVER['HTTP_HOST'],
             $_SERVER['REQUEST_URI'],
@@ -95,7 +116,8 @@ class RedirectionIO
             $_SERVER['HTTP_REFERER'],
             $scheme
         );
-        $response = new Response(http_response_code());
+
+        $response = new Response(http_response_code(), $this->lastRuleId, $location);
 
         $this->client->log($request, $response);
     }
