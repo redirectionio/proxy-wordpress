@@ -76,7 +76,9 @@ class RedirectionIO
             return false;
         }
 
-        $this->lastRuleId = $response->getRuleId();
+        if (method_exists($response, 'getRuleId')) {
+            $this->lastRuleId = $response->getRuleId();
+        }
 
         if ($response->getStatusCode() === 410) {
             define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
