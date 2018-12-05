@@ -149,11 +149,12 @@ class RedirectionIOTest extends TestCase
             throw new \RuntimeException('Unable to find PHP binary to run a fake agent.');
         }
 
-        // find fake_agent location
-        $parentFolder = substr(__DIR__, -16, -5);
-        $fakeAgent = ('/wordpress/' === $parentFolder) ?
-            __DIR__ . '/../../sdk/src/Resources/fake_agent.php' :
-            './vendor/redirectionio/proxy-sdk/src/Resources/fake_agent.php';
+        // Always prefer vendor
+        $fakeAgent = './vendor/redirectionio/proxy-sdk/src/Resources/fake_agent.php';
+
+        if (!file_exists($fakeAgent)) {
+            $fakeAgent = __DIR__ . '/../../sdk/src/Resources/fake_agent.php';
+        }
 
         $agent = new Process([$binary, $fakeAgent]);
         $agent
