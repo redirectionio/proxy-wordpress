@@ -38,7 +38,7 @@ This install procedure allows to install the plugin from this repository's code.
 
 1. Donwload the zip archive of this repository's code: [https://github.com/redirectionio/proxy-wordpress/archive/master.zip](https://github.com/redirectionio/proxy-wordpress/archive/master.zip)
 2. Extract this archive, and navigate in the extracted folder with a shell
-3. Install composer dependencies:
+3. Install [Composer](https://getcomposer.org/) dependencies:
 ```sh
 COMPOSER_MIRROR_PATH_REPOS=1 composer install
 ```
