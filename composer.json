@@ -17,6 +17,13 @@
             "email": "support@redirection.io"
         }
     ],
+    "archive": {
+        "exclude": [
+            "!vendor/*",
+            ".*",
+            "!.gitignore"
+        ]
+    },
     "require": {
         "redirectionio/proxy-sdk": "^0.1.1"
     },
