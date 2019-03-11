@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: redirection.io\n"
-"POT-Creation-Date: 2018-02-09 23:01+0100\n"
-"PO-Revision-Date: 2018-05-22 15:22+0200\n"
+"POT-Creation-Date: 2019-03-11 11:28+0100\n"
+"PO-Revision-Date: 2019-03-11 11:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: support@redirection.io\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -17,23 +17,23 @@ msgstr ""
 
 #: src/RedirectionIOSettingsPage.php:42
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
+msgstr "Vous n'avez pas les permissions suffisantes pour accéder à cette page."
 
 #: src/RedirectionIOSettingsPage.php:48
 msgid ""
 "redirection.io let you track HTTP errors and setup useful HTTP redirections."
 msgstr ""
-"redirection.io vous permet de trackez les erreurs HTTP et de configurer des "
+"redirection.io vous permet de suivre les erreurs HTTP et de configurer des "
 "redirections HTTP utiles."
 
 #: src/RedirectionIOSettingsPage.php:50
 #, php-format
 msgid ""
-"This plugin works in combination with <a href=\"%s\">redirection.io</a> \n"
+"This plugin works in combination with <a href=\"%s\">redirection.io</a>\n"
 "                    and need an installed and configured agent on your "
 "server.\n"
 "                    </br>\n"
-"                    Before using it, please make sure that you have :"
+"                    Before using it, please make sure that you have:"
 msgstr ""
 "Ce plugin fonctionne en parallèle avec le site <a href=\"%s\">redirection."
 "io</a> \n"
@@ -43,7 +43,8 @@ msgstr ""
 
 #: src/RedirectionIOSettingsPage.php:55
 msgid "created a redirection.io account <a href=\"\">here</a>"
-msgstr "créé un compte redirection.io <a href=\"\">ici</a>"
+msgstr ""
+"créé un compte redirection.io <a href=\"\">sur le site de redirection.io</a>"
 
 #: src/RedirectionIOSettingsPage.php:56
 msgid ""
@@ -59,15 +60,15 @@ msgid ""
 "question."
 msgstr ""
 "Contactez-nous par email à support@redirection.io si vous avez besoin d’aide "
-"ou la moindre question."
+"ou si vous avez la moindre question."
 
 #: src/RedirectionIOSettingsPage.php:61
 msgid ""
 "Note: in most cases, you only have one agent, so you only need to configure "
 "one connection."
 msgstr ""
-"Remarque : dans la majorité des cas, vous avez seulement un agent, donc vous "
-"n’avez besoin de configurer qu’une seule connexion."
+"Remarque: dans la plupart des cas, vous n'avez qu'un seul agent, vous n'avez "
+"donc qu'à configurer une seule connexion."
 
 #: src/RedirectionIOSettingsPage.php:64
 msgid "Are you sure ?"
@@ -102,7 +103,8 @@ msgstr "Adresse de l’agent"
 msgid ""
 "[Required] Insert here your agent address. Internet Domain socket (AF_INET) "
 "and Unix Domain socket (AF_UNIX) are supported.<br/> Examples: "
-"192.168.1.1:20301, agent.my-website.com:10301, /var/run/my-agent.sock"
+"tcp://192.168.1.1:20301, tcp://agent.my-website.com:10301, unix:///var/run/"
+"my-agent.sock"
 msgstr ""
 "[Requis] Entrez ici l’adresse de votre agent. Les sockets Internet (AF_INET) "
 "et Unix (AF_UNIX) sont supportés.<br/> Exemples : 192.168.1.1:20301, agent."
@@ -118,7 +120,7 @@ msgstr "Oui, je veux les désactiver"
 
 #: src/WPCoreFunctionsOverrider.php:50
 msgid "working"
-msgstr "en marche"
+msgstr "fonctionnel"
 
 #: src/WPCoreFunctionsOverrider.php:56
 msgid "not working"
@@ -126,7 +128,7 @@ msgstr "ne fonctionne pas"
 
 #: src/WPCoreFunctionsOverrider.php:75
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: src/WPCoreFunctionsOverrider.php:129
 msgid ""
