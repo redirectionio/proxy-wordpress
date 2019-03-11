@@ -23,18 +23,32 @@ Drop us an email to `support@redirection.io` if you need help or have any questi
 3. Click `Install Now` button
 4. Click `Activate` button
 
+### zip archive install
+
+We provide a zip archive of the plugin [in our "releases" page](https://github.com/redirectionio/proxy-wordpress/releases).
+
+1. Download the latest release
+2. In your WordPress admin area, head to `Plugins > Add New`
+3. Click the "Upload Plugin" button
+4. Choose the zip archive and click the "Install Now" button
+
 ### Manual installation
 
-*The old school way*
+This install procedure allows to install the plugin from this repository's code.
 
-1. Run `COMPOSER_MIRROR_PATH_REPOS=1 composer install`
-2. Copy/paste `wordpress` directory in `wp-content/plugins/` and rename it `redirectionio`
-3. Go to your WP admin area in `Plugins > Installed Plugins`
-4. Click `Activate` link in redirection.io row
+1. Donwload the zip archive of this repository's code: [https://github.com/redirectionio/proxy-wordpress/archive/master.zip](https://github.com/redirectionio/proxy-wordpress/archive/master.zip)
+2. Extract this archive, and navigate in the extracted folder with a shell
+3. Install composer dependencies:
+```sh
+COMPOSER_MIRROR_PATH_REPOS=1 composer install
+```
+4. Move this `wordpress` directory in `wp-content/plugins/` and rename it `redirectionio`
+5. Go to your WordPress admin area in `Plugins > Installed Plugins`
+6. Click `Activate` link in redirection.io row
 
 ## Configuration
 
-Preliminary step: Find the host/port pair or your agent(s)
+This step is required to get the plugin work. First, you need to [setup a redirection.io agent](https://redirection.io/documentation/developer-documentation/installation-of-the-agent). Once this is done, you can go on with the plugin's configuration:
 
 1. Go to your WP admin area in `Settings > redirection.io`
 2. Configure connection(s)
