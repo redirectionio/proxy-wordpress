@@ -3,6 +3,8 @@
 namespace RedirectionIO\Client\Wordpress;
 
 use RedirectionIO\Client\Sdk\Client;
+use RedirectionIO\Client\Sdk\Command\LogCommand;
+use RedirectionIO\Client\Sdk\Command\MatchWithResponseCommand;
 use RedirectionIO\Client\Sdk\HttpMessage\Request;
 use RedirectionIO\Client\Sdk\HttpMessage\Response;
 
@@ -26,6 +28,7 @@ class RedirectionIO
     public function setUp()
     {
         add_option('redirectionio', [
+            'projectKey' => '',
             'connections' => [
                 [
                     'name' => '',
@@ -41,7 +44,7 @@ class RedirectionIO
         $options = get_option('redirectionio');
         $connections = [];
 
-        if (false === $options || !isset($options['connections'])) {
+        if (false === $options || empty($options['projectKey']) || !isset($options['connections'])) {
             return false;
         }
 
@@ -49,7 +52,7 @@ class RedirectionIO
             $connections[$connection['name']] = $connection['remote_socket'];
         }
 
-        $this->client = new Client($connections);
+        $this->client = new Client($options['projectKey'], $connections);
         $scheme = 'http';
 
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
@@ -70,7 +73,7 @@ class RedirectionIO
             return false;
         }
 
-        $response = $this->client->findRedirect($request);
+        $response = $this->client->request(new MatchWithResponseCommand($request));
 
         if (null === $response) {
             return false;
@@ -121,7 +124,7 @@ class RedirectionIO
 
         $response = new Response(http_response_code(), $this->lastRuleId, $location);
 
-        $this->client->log($request, $response);
+        $this->client->request(new LogCommand($request, $response));
     }
 
     public function exitCode()

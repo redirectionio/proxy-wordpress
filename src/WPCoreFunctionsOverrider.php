@@ -26,9 +26,12 @@ class WPCoreFunctionsOverrider
 
         $sections = (array) $wp_settings_sections[$page];
 
-        // remove doNotRedirectAdmin section from sections array to use it later
+        // remove projectKey, doNotRedirectAdmin sections from sections array to use it later
+        $projectKeySection = $sections['redirectionio-section-project-key'];
         $doNotRedirectAdminSection = $sections['redirectionio-section-do-not-redirect-admin'];
-        unset($sections['redirectionio-section-do-not-redirect-admin']);
+        unset($sections['redirectionio-section-project-key'], $sections['redirectionio-section-do-not-redirect-admin']);
+
+        $this->outputProjectKey($page, $projectKeySection);
 
         echo '<div id="rio_connections">';
 
@@ -114,6 +117,25 @@ class WPCoreFunctionsOverrider
             echo '</td>';
             echo '</tr>';
         }
+    }
+
+    /**
+     * @param mixed $page
+     * @param mixed $section
+     */
+    private function outputProjectKey($page, $section)
+    {
+        if ($section['title']) {
+            echo '<h2>' . $section['title'] . '</h2>';
+        }
+
+        echo '<p>' . __('Please fill here your redirection.io project key.', 'redirectionio') . '</p>';
+        echo '<p>' . sprintf(__("
+            You can find it in the instances section of your dashboard: %s.
+        ", 'redirectionio'), '<a href="https://redirection.io/manager" target="_blank">https://redirection.io/manager</a>') . '</p>';
+        echo '<table class="form-table">';
+        $this->doSettingsFields($page, $section['id']);
+        echo '</table>';
     }
 
     /**

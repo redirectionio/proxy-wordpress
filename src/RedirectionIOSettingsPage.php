@@ -3,6 +3,7 @@
 namespace RedirectionIO\Client\Wordpress;
 
 use RedirectionIO\Client\Sdk\Client;
+use RedirectionIO\Client\Sdk\Command\MatchWithResponseCommand;
 use RedirectionIO\Client\Sdk\Exception\AgentNotFoundException;
 use RedirectionIO\Client\Sdk\HttpMessage\Request;
 
@@ -93,6 +94,24 @@ class RedirectionIOSettingsPage
 
         $options = get_option('redirectionio');
 
+        // Add projectKey
+        add_settings_section(
+            'redirectionio-section-project-key',
+            __('Project key', 'redirectionio'),
+            [$this, 'printSection'],
+            'redirectionio'
+        );
+
+        add_settings_field(
+            'redirectionio-input-project-key',
+            __('Project key', 'redirectionio'),
+            [$this, 'printProjectKeyField'],
+            'redirectionio',
+            'redirectionio-section-project-key',
+            $options['projectKey']
+        );
+
+        // Add connections
         foreach ($options['connections'] as $i => $option) {
             add_settings_section(
                 'redirectionio-section-' . $i,
@@ -125,7 +144,7 @@ class RedirectionIOSettingsPage
                 add_settings_field(
                     $i . '_' . $key,
                     $title . ($required ? '*' : ''),
-                    [$this, 'printField'],
+                    [$this, 'printConnectionField'],
                     'redirectionio',
                     'redirectionio-section-' . $i,
                     [
@@ -139,7 +158,7 @@ class RedirectionIOSettingsPage
             }
         }
 
-        // Add doNotRedirectAdmin option
+        // Add doNotRedirectAdmin
         add_settings_section(
             'redirectionio-section-do-not-redirect-admin',
             __('Disable redirections for admin area', 'redirectionio'),
@@ -150,7 +169,7 @@ class RedirectionIOSettingsPage
         add_settings_field(
             'redirectionio-checkbox-do-not-redirect-admin',
             __("Yes, I wan't to disable it", 'redirectionio'),
-            [$this, 'printCheckbox'],
+            [$this, 'printDoNotRedirectAdminCheckbox'],
             'redirectionio',
             'redirectionio-section-do-not-redirect-admin',
             $options['doNotRedirectAdmin']
@@ -162,15 +181,16 @@ class RedirectionIOSettingsPage
      */
     public function sanitizeInput(array $input)
     {
-        $newInput = [];
+        $newInput = [
+            'projectKey' => $input['projectKey'],
+            'doNotRedirectAdmin' => $input['doNotRedirectAdmin'],
+        ];
 
         foreach ($input['connections'] as $i => $option) {
             foreach ($option as $key => $value) {
                 $newInput['connections'][$i][$key] = sanitize_text_field($input['connections'][$i][$key]);
             }
         }
-
-        $newInput['doNotRedirectAdmin'] = $input['doNotRedirectAdmin'];
 
         return $newInput;
     }
@@ -179,10 +199,16 @@ class RedirectionIOSettingsPage
     {
     }
 
+    public function printProjectKeyField(string $projectKey)
+    {
+        $placeholder = __('my-project-key', 'redirectionio');
+        echo "<input id='redirectionio_projectKey' name='redirectionio[projectKey]' type='text' size='100' value='$projectKey' placeholder='$placeholder' />";
+    }
+
     /**
      * @param array $args
      */
-    public function printField(array $args)
+    public function printConnectionField(array $args)
     {
         $id = isset($args['id']) ? $args['id'] : '';
         $type = isset($args['type']) ? $args['type'] : '';
@@ -197,7 +223,7 @@ class RedirectionIOSettingsPage
     /**
      * @param bool $checked
      */
-    public function printCheckbox($checked)
+    public function printDoNotRedirectAdminCheckbox($checked)
     {
         echo '<input id="redirectionio_doNotRedirectAdmin" name="redirectionio[doNotRedirectAdmin]" type="checkbox" ' . ($checked ? 'checked' : '') . ' />';
     }
@@ -233,10 +259,6 @@ class RedirectionIOSettingsPage
 
     /**
      * Test if a connection is currently working.
-     *
-     * $connection param should be an associative array
-     * with (`port` && `host`) || `remote_socket` keys
-     *
      * @param mixed $connection array|bool(false)
      */
     public static function isWorkingConnection($connection)
@@ -246,6 +268,7 @@ class RedirectionIOSettingsPage
         }
 
         $client = new Client(
+            'check-status-project-key',
             [
                 'checkStatus' => $connection['remote_socket'],
             ],
@@ -255,7 +278,7 @@ class RedirectionIOSettingsPage
 
         try {
             $request = new Request('', '', '');
-            $client->findRedirect($request);
+            $client->request(new MatchWithResponseCommand($request));
         } catch (AgentNotFoundException $e) {
             return false;
         }
