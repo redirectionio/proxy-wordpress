@@ -14,7 +14,7 @@ function add_action()
 
 function get_option()
 {
-    return RedirectionIOTest::$connections;
+    return RedirectionIOTest::$options;
 }
 
 function get_site_url()
@@ -60,7 +60,8 @@ use Symfony\Component\Process\Process;
  */
 class RedirectionIOTest extends TestCase
 {
-    public static $connections = [
+    public static $options = [
+        'projectKey' => 'szio2389-bfdz-51e8-8468-02dcop129501:ep6a4805-eo6z-dzo6-aeb0-8c1lbmo40242',
         'connections' => [
             [
                 'name' => 'agent',
@@ -127,7 +128,8 @@ class RedirectionIOTest extends TestCase
 
     public function testWhenAgentDown()
     {
-        self::$connections = [
+        self::$options = [
+            'projectKey' => self::$options['projectKey'],
             'connections' => [
                 [
                     'name' => 'agent',

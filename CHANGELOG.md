@@ -1,11 +1,10 @@
 # ChangeLog
 
-## Unreleased
+## 1.0.0
 
-...
+- Use PHP proxy-sdk version 1.0.0
+- Require the project key in WordPress dashboard
 
-## 1.0.0 - 2018-03-02
+## 0.1.0
 
-### Added
-
-- Initial release
+- Add initial release
