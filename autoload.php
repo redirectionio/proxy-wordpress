@@ -4,7 +4,7 @@
  * Plugin Name: redirection.io
  * Plugin URI: https://redirection.io
  * Description: Proxy client for redirection.io | Put an end to 404 errors - Track HTTP errors and setup useful HTTP redirections
- * Version: 0.2.0
+ * Version: 0.2.1
  * Author: redirection-io
  * Author Website: https://redirection.io
  * Text Domain: redirectionio

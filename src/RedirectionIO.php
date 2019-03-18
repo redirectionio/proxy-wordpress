@@ -17,6 +17,8 @@ class RedirectionIO
 {
     private $client;
 
+    private $missConfigured = false;
+
     private $lastRuleId = null;
 
     public function __construct()
@@ -45,6 +47,7 @@ class RedirectionIO
         $connections = [];
 
         if (false === $options || empty($options['projectKey']) || !isset($options['connections'])) {
+            $this->missConfigured = true;
             return false;
         }
 
@@ -95,6 +98,10 @@ class RedirectionIO
 
     public function log()
     {
+        if ($this->missConfigured) {
+            return;
+        }
+
         $scheme = 'http';
 
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
