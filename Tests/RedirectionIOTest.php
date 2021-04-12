@@ -82,7 +82,7 @@ class RedirectionIOTest extends TestCase
         static::startAgent();
     }
 
-    public function setUp()
+    protected function setUp()
     {
         // clear
         self::$response = [];

@@ -14,7 +14,7 @@
 namespace RedirectionIO\Client\Wordpress;
 
 // Prevent public user to directly access .php files through url
-if (!defined('ABSPATH')) {
+if (!\defined('ABSPATH')) {
     exit;
 }
 

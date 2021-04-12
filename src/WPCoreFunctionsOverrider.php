@@ -35,7 +35,7 @@ class WPCoreFunctionsOverrider
 
         echo '<div id="rio_connections">';
 
-        $nb = count($sections);
+        $nb = \count($sections);
         foreach ($sections as $section) {
             if ($section['title']) {
                 if (1 === $nb) {
@@ -62,7 +62,7 @@ class WPCoreFunctionsOverrider
             }
 
             if ($section['callback']) {
-                call_user_func($section['callback'], $section);
+                \call_user_func($section['callback'], $section);
             }
 
             if (!isset($wp_settings_fields) || !isset($wp_settings_fields[$page]) || !isset($wp_settings_fields[$page][$section['id']])) {
@@ -113,7 +113,7 @@ class WPCoreFunctionsOverrider
             }
 
             echo '<td>';
-            call_user_func($field['callback'], $field['args']);
+            \call_user_func($field['callback'], $field['args']);
             echo '</td>';
             echo '</tr>';
         }
@@ -130,9 +130,9 @@ class WPCoreFunctionsOverrider
         }
 
         echo '<p>' . __('Please fill here your redirection.io project key.', 'redirectionio') . '</p>';
-        echo '<p>' . sprintf(__("
+        echo '<p>' . sprintf(__('
             You can find it in the instances section of your dashboard: %s.
-        ", 'redirectionio'), '<a href="https://redirection.io/manager" target="_blank">https://redirection.io/manager</a>') . '</p>';
+        ', 'redirectionio'), '<a href="https://redirection.io/manager" target="_blank">https://redirection.io/manager</a>') . '</p>';
         echo '<table class="form-table">';
         $this->doSettingsFields($page, $section['id']);
         echo '</table>';

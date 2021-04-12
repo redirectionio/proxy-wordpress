@@ -34,7 +34,7 @@ class RedirectionIOSettingsPage
 
     public function setTranslations()
     {
-        load_plugin_textdomain('redirectionio', false, dirname(plugin_basename(__FILE__)) . '/../languages');
+        load_plugin_textdomain('redirectionio', false, \dirname(plugin_basename(__FILE__)) . '/../languages');
     }
 
     public function outputContent()
@@ -176,9 +176,6 @@ class RedirectionIOSettingsPage
         );
     }
 
-    /**
-     * @param array $input
-     */
     public function sanitizeInput(array $input)
     {
         $newInput = [
@@ -205,9 +202,6 @@ class RedirectionIOSettingsPage
         echo "<input id='redirectionio_projectKey' name='redirectionio[projectKey]' type='text' size='100' value='$projectKey' placeholder='$placeholder' />";
     }
 
-    /**
-     * @param array $args
-     */
     public function printConnectionField(array $args)
     {
         $id = isset($args['id']) ? $args['id'] : '';
@@ -259,6 +253,7 @@ class RedirectionIOSettingsPage
 
     /**
      * Test if a connection is currently working.
+     *
      * @param mixed $connection array|bool(false)
      */
     public static function isWorkingConnection($connection)

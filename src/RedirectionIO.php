@@ -19,7 +19,7 @@ class RedirectionIO
 
     private $missConfigured = false;
 
-    private $lastRuleId = null;
+    private $lastRuleId;
 
     public function __construct()
     {
@@ -48,6 +48,7 @@ class RedirectionIO
 
         if (false === $options || empty($options['projectKey']) || !isset($options['connections'])) {
             $this->missConfigured = true;
+
             return false;
         }
 
@@ -87,7 +88,7 @@ class RedirectionIO
         }
 
         if ($response->getStatusCode() === 410) {
-            define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
+            \define('DONOTCACHEPAGE', true); // WP Super Cache and W3 Total Cache recognise this
             status_header(410);
         } else {
             wp_redirect($response->getLocation(), $response->getStatusCode());
@@ -141,13 +142,11 @@ class RedirectionIO
 
     /**
      * Check if the requested page belongs to admin area.
-     *
-     * @param Request $request
      */
     private function isAdminPage(Request $request)
     {
         $adminRoot = str_replace(get_site_url(), '', get_admin_url());
-        $requestPath = substr($request->getPath(), 0, strlen($adminRoot));
+        $requestPath = substr($request->getPath(), 0, \strlen($adminRoot));
 
         if ($adminRoot === $requestPath) {
             return true;
